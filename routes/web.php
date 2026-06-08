@@ -2,33 +2,33 @@
 
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 
-Route::get('/admin/login', [AuthController::class, 'showAdminLogin'])->name('admin.login');
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('guest')->group(function () {
 
-Route::post('/admin/login', [AuthController::class, 'login']);
+    Route::get('/login', [AuthController::class, 'showLogin'])
+        ->name('login');
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/login', [AuthController::class, 'login'])
+        ->name('login.post');
 
-use App\Http\Controllers\Manager\DashboardController;
+    Route::get('/employee-register', [AuthController::class, 'showEmployeeRegister'])
+        ->name('employee.register');
 
-Route::prefix('manager')
-    ->middleware(['auth'])
-    ->group(function () {
+    Route::post('/employee-register', [AuthController::class, 'employeeRegister'])
+        ->name('employee.register.store');
+});
 
-        Route::get('/dashboard',
-            [DashboardController::class, 'index'])
-            ->name('manager.dashboard');
-
-    });
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -45,3 +45,10 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::get('/employee/register', [AuthController::class, 'showEmployeeRegister']);
 Route::post('/employee/register', [AuthController::class, 'employeeRegister']);
+
+
+
+Route::get('/search', [SearchController::class, 'index'])
+    ->name('search.global');
+Route::get('/global-live-search', [SearchController::class, 'liveSearch'])
+    ->name('search.live');

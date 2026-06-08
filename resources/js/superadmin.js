@@ -515,25 +515,28 @@ $(document).ready(function () {
 
 });
 
+    document.getElementById('conform').addEventListener('submit', function (e) {
 
-document.getElementById('UpdateForm').addEventListener('submit', function(e){
+    e.preventDefault();
 
-    e.preventDefault(); // stop form submit first
+    let form = this;
 
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You want to update this employee?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#198754',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, update it!'
-    }).then((result) => {
+    title: "Are you sure?",
+    text: "Do you want to generate salary?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Yes, Generate",
+    cancelButtonText: "Cancel"
+}).then((result) => {
 
-        if (result.isConfirmed) {
-            this.submit(); // ONLY submit if OK clicked
-        }
-
-    });
+    if (result.isConfirmed) {
+    form.submit(); // 🔥 normal Laravel submit
+}
 
 });
+
+});
+
+
+

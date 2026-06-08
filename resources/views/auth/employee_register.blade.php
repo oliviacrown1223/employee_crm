@@ -4,118 +4,147 @@
     <meta charset="UTF-8">
     <title>Employee Register</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        body{
-            background: linear-gradient(135deg, #eef2f3, #cfd9df);
-        }
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-        /* Card premium look */
-        .card{
-            border-radius: 18px;
-            overflow: hidden;
-        }
 
-        /* Inputs */
-        .form-control{
-            border-radius: 12px;
-            font-size: 15px;
-        }
 
-        /* Focus effect */
-        .form-control:focus{
-            border-color: #000;
-            box-shadow: 0 0 0 0.15rem rgba(0,0,0,.1);
-        }
-
-        /* Placeholder */
-        .form-control::placeholder{
-            font-size: 13px;
-            color: #999;
-        }
-
-        /* Error text */
-        .text-danger{
-            font-size: 12px;
-        }
-
-        /* Valid/Invalid UI */
-        .is-valid{
-            border-color: #198754 !important;
-        }
-
-        .is-invalid{
-            border-color: #dc3545 !important;
-        }
-    </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body class="mainloginpage">
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
+<div class="login-wrapper register-wrapper">
 
-    <div class="col-lg-5">
+    <div class="login-left">
 
-        <div class="card shadow-lg border-0">
+        <div class="brand-icon">
+            <i class="bi bi-person-plus-fill"></i>
+        </div>
 
-            <!-- HEADER -->
-            <div class="card-header bg-dark text-white text-center py-3">
-                <h4 class="mb-0">Employee Registration</h4>
+        <h1>Join Employee CRM</h1>
+
+        <p>
+            Create your employee account and access your dashboard,
+            attendance, salary, daily work and profile information securely.
+        </p>
+
+        <div class="feature-list">
+
+            <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Quick employee registration</span>
             </div>
 
-            <div class="card-body p-4">
+            <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Secure login access</span>
+            </div>
 
-                <form id="empForm">
-
-                    @csrf
-
-                    <!-- NAME -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Name</label>
-                        <input type="text" name="name" id="name"
-                               class="form-control form-control-lg"
-                               placeholder="Enter full name">
-                        <small class="text-danger" id="error-name"></small>
-                    </div>
-
-                    <!-- EMAIL -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Email</label>
-                        <input type="email" name="email" id="email"
-                               class="form-control form-control-lg"
-                               placeholder="example@domain.com">
-                        <small class="text-danger" id="error-email"></small>
-                    </div>
-
-                    <!-- MOBILE -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Mobile</label>
-                        <input type="text" name="mobile" id="mobile"
-                               class="form-control form-control-lg"
-                               placeholder="10 digit mobile number">
-                        <small class="text-danger" id="error-mobile"></small>
-                    </div>
-
-                    <!-- PASSWORD -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Password</label>
-                        <input type="password" name="password" id="password"
-                               class="form-control form-control-lg"
-                               placeholder="Minimum 6 characters">
-                        <small class="text-danger" id="error-password"></small>
-                    </div>
-
-                    <button type="submit" class="btn btn-dark w-100 btn-lg">
-                        Create Account
-                    </button>
-
-                </form>
-
+            <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Role based CRM dashboard</span>
             </div>
 
         </div>
+
+    </div>
+
+    <div class="login-right">
+
+        <h3 class="form-title">Create Account</h3>
+        <p class="form-subtitle">
+            Fill your details to register as employee
+        </p>
+
+        <form id="empForm">
+            @csrf
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Name</label>
+
+                <div class="input-group-custom">
+                    <i class="bi bi-person"></i>
+
+                    <input type="text"
+                           name="name"
+                           id="name"
+                           class="form-control formcontroller"
+                           placeholder="Enter full name">
+                </div>
+
+                <small class="text-danger" id="error-name"></small>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Email</label>
+
+                <div class="input-group-custom">
+                    <i class="bi bi-envelope"></i>
+
+                    <input type="email"
+                           name="email"
+                           id="email"
+                           class="form-control formcontroller"
+                           placeholder="example@domain.com">
+                </div>
+
+                <small class="text-danger" id="error-email"></small>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Mobile</label>
+
+                <div class="input-group-custom">
+                    <i class="bi bi-phone"></i>
+
+                    <input type="text"
+                           name="mobile"
+                           id="mobile"
+                           class="form-control formcontroller"
+                           placeholder="10 digit mobile number">
+                </div>
+
+                <small class="text-danger" id="error-mobile"></small>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Password</label>
+
+                <div class="input-group-custom">
+                    <i class="bi bi-lock"></i>
+
+                    <input type="password"
+                           name="password"
+                           id="password"
+                           class="form-control formcontroller"
+                           placeholder="Minimum 6 characters">
+                </div>
+
+                <small class="text-danger" id="error-password"></small>
+            </div>
+
+            <button type="submit" class="btn btn-login w-100 mt-2 buttonlogin">
+                <i class="bi bi-person-plus me-1"></i>
+                Create Account
+            </button>
+
+            <div class="text-center mt-4 ">
+                <span class="text-muted">Already registered?</span>
+
+                <a href="{{ url('/login') }}" class="register-link">
+                    Login Here
+                </a>
+            </div>
+
+        </form>
 
     </div>
 
@@ -124,7 +153,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script>
-
     function clearErrors(){
         $('input').removeClass('is-invalid is-valid');
         $('.text-danger').text('');
@@ -142,10 +170,6 @@
         $('#error-' + field).text('');
     }
 
-    /* ===============================
-       SUBMIT (ONLY ONE TIME)
-    =============================== */
-
     $('#empForm').on('submit', function(e){
         e.preventDefault();
 
@@ -159,7 +183,6 @@
             data: $(form).serialize(),
 
             success: function(){
-
                 Swal.fire({
                     icon: "success",
                     title: "Success!",
@@ -168,17 +191,13 @@
                     allowOutsideClick: false,
                     allowEscapeKey: false
                 }).then((result) => {
-
                     if (result.isConfirmed) {
                         window.location.href = "/login";
                     }
-
                 });
-
             },
 
             error: function(xhr){
-
                 let errors = xhr.responseJSON.errors;
 
                 if(errors.name) setError('name', errors.name[0]);
@@ -187,14 +206,8 @@
                 if(errors.password) setError('password', errors.password[0]);
             }
         });
-
     });
 
-    /* ===============================
-       LIVE VALIDATIONS
-    =============================== */
-
-    // NAME
     $('#name').on('input', function(){
         this.value = this.value.replace(/[^a-zA-Z\s]/g,'');
 
@@ -205,7 +218,6 @@
         }
     });
 
-    // MOBILE
     $('#mobile').on('input', function(){
         this.value = this.value.replace(/[^0-9]/g,'').slice(0,10);
 
@@ -216,7 +228,6 @@
         }
     });
 
-    // EMAIL
     $('#email').on('input', function(){
         this.value = this.value.replace(/\s/g,'').toLowerCase();
 
@@ -235,16 +246,14 @@
         }
     });
 
-    // PASSWORD
     $('#password').on('input', function(){
-
         if(this.value.length < 6){
             setError('password','Minimum 6 characters required');
         } else {
             setValid('password');
         }
     });
-
 </script>
+
 </body>
 </html>

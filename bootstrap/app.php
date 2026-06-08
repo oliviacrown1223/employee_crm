@@ -14,11 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
 
-            Route::middleware('web')
-                ->group(base_path('routes/superadmin.php'))
-                ->group(base_path('routes/employee.php'))
-                ->group(base_path('routes/manager.php'))
-                ->group(base_path('routes/hr.php'));
+            Route::middleware('web')->group(function () {
+             /*   require base_path('routes/superadmin.php');
+                require base_path('routes/employee.php');
+                require base_path('routes/manager.php');
+                require base_path('routes/hr.php');*/
+                require base_path('routes/panel.php');
+            });
+
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
@@ -32,13 +35,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // MIDDLEWARE ALIAS
         $middleware->alias([
-
-            'role' => RoleMiddleware::class,
-
-            'permission' => PermissionMiddleware::class,
-
-            'role_or_permission' => RoleOrPermissionMiddleware::class,
-
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

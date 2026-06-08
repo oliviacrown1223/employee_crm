@@ -9,24 +9,29 @@ use Illuminate\Database\Eloquent\Model;
 class DailyWork extends Model
 {
     protected $fillable = [
+        'employee_id',
         'user_id',
+        'assigned_user_id',
         'task_title',
         'task_description',
         'hours_worked',
+        'work_date',
         'status',
-        'submission_date',
         'submitted_at',
-        'assigned_user_id',
-        'work_date'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
+    }
+
     public function employee()
     {
-        return $this->belongsTo(Employee::class,
-            'user_id');
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 }

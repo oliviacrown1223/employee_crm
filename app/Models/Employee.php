@@ -23,10 +23,7 @@ class Employee extends Model
         'status'
 
     ];
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+
 
     public function attendance()
     {
@@ -44,9 +41,22 @@ class Employee extends Model
     {
         return $this->belongsTo(Employee::class, 'manager_id');
     }
-
+    public function permissions()
+    {
+        return $this->hasMany(EmployeePermission::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function teamMembers()
     {
         return $this->hasMany(Employee::class, 'manager_id');
+    }
+    public function hasEmployeePermission($permission)
+    {
+        return $this->permissions()
+            ->where('permission', $permission)
+            ->exists();
     }
 }

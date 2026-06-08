@@ -1,3 +1,4 @@
+/*
 body{
     margin:0;
     padding:0;
@@ -159,7 +160,7 @@ body{
     font-family: 'Poppins', sans-serif;
 }
 
-/* HERO */
+!* HERO *!
 
 .hero-section{
     background:
@@ -190,7 +191,7 @@ body{
     opacity: .8;
 }
 
-/* LOGIN CARD */
+!* LOGIN CARD *!
 
 .login-card{
     width: 100%;
@@ -214,3 +215,4 @@ body{
     align-items: center;
     justify-content: center;
 }
+*/

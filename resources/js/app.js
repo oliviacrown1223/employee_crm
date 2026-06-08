@@ -12,6 +12,4 @@ import Swal from 'sweetalert2';
 
 window.Swal = Swal;
 
-import './attendance';
-import './custom';
-import './superadmin';
+import './confirm';

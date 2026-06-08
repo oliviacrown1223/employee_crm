@@ -1,3 +1,4 @@
+{{--
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -21,17 +22,23 @@
 
         <div class="col-12 col-xl-10">
 
-            {{-- MAIN GLASS CARD --}}
+            --}}
+{{-- MAIN GLASS CARD --}}{{--
+
             <div class="card border-0 rounded-5 overflow-hidden shadow-lg bg-dark text-white">
 
                 <div class="row g-0">
 
-                    {{-- LEFT CONTENT --}}
+                    --}}
+{{-- LEFT CONTENT --}}{{--
+
                     <div class="col-lg-7 position-relative">
 
                         <div class="p-5 h-100 d-flex flex-column justify-content-between">
 
-                            {{-- TOP --}}
+                            --}}
+{{-- TOP --}}{{--
+
                             <div>
 
                                 <div class="d-flex align-items-center mb-5">
@@ -81,7 +88,9 @@
 
 
 
-                            {{-- CENTER BOXES --}}
+                            --}}
+{{-- CENTER BOXES --}}{{--
+
                             <div class="row g-4">
 
                                 <div class="col-md-6">
@@ -142,7 +151,9 @@
 
 
 
-                            {{-- BOTTOM --}}
+                            --}}
+{{-- BOTTOM --}}{{--
+
                             <div class="row text-center mt-5">
 
                                 <div class="col-4">
@@ -201,14 +212,18 @@
 
 
 
-                    {{-- RIGHT LOGIN --}}
+                    --}}
+{{-- RIGHT LOGIN --}}{{--
+
                     <div class="col-lg-5 bg-white text-dark">
 
                         <div class="h-100 d-flex align-items-center">
 
                             <div class="w-100 p-4 p-lg-5">
 
-                                {{-- MOBILE LOGO --}}
+                                --}}
+{{-- MOBILE LOGO --}}{{--
+
                                 <div class="d-lg-none text-center mb-4">
 
                                     <div class="bg-dark text-white rounded-4 d-inline-flex align-items-center justify-content-center fw-bold"
@@ -246,7 +261,9 @@
 
 
 
-                                {{-- ERROR --}}
+                                --}}
+{{-- ERROR --}}{{--
+
                                 @if(session('error'))
 
                                     <div class="alert alert-danger border-0 rounded-4">
@@ -259,7 +276,9 @@
 
 
 
-                                {{-- SUCCESS --}}
+                                --}}
+{{-- SUCCESS --}}{{--
+
                                 @if(session('success'))
 
                                     <div class="alert alert-success border-0 rounded-4">
@@ -272,7 +291,9 @@
 
 
 
-                                {{-- FORM --}}
+                                --}}
+{{-- FORM --}}{{--
+
                                 <form method="POST"
                                       action="{{ url('/login') }}">
 
@@ -280,7 +301,9 @@
 
 
 
-                                    {{-- EMAIL --}}
+                                    --}}
+{{-- EMAIL --}}{{--
+
                                     <div class="mb-4">
 
                                         <label class="form-label fw-semibold">
@@ -309,7 +332,9 @@
 
 
 
-                                    {{-- PASSWORD --}}
+                                    --}}
+{{-- PASSWORD --}}{{--
+
                                     <div class="mb-4">
 
                                         <label class="form-label fw-semibold">
@@ -337,12 +362,16 @@
 
 
 
-                                    {{-- ROLE --}}
+                                    --}}
+{{-- ROLE --}}{{--
 
 
 
 
-                                    {{-- OPTIONS --}}
+
+                                    --}}
+{{-- OPTIONS --}}{{--
+
                                     <div class="d-flex justify-content-between align-items-center mb-4">
 
                                         <div class="form-check">
@@ -364,7 +393,9 @@
 
 
 
-                                    {{-- BUTTON --}}
+                                    --}}
+{{-- BUTTON --}}{{--
+
                                     <div class="d-grid mb-4">
 
                                         <button type="submit"
@@ -376,7 +407,9 @@
 
                                     </div>
 
-                                    {{-- REGISTER LINK --}}
+                                    --}}
+{{-- REGISTER LINK --}}{{--
+
                                     <div class="text-center mb-3">
 
                                         <a href="{{ url('/employee/register') }}"
@@ -388,7 +421,9 @@
 
                                     </div>
 
-                                    {{-- FOOTER --}}
+                                    --}}
+{{-- FOOTER --}}{{--
+
                                     <div class="text-center">
 
                                         <small class="text-muted">
@@ -419,4 +454,153 @@
 
 </body>
 
+</html>
+--}}
+
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Employee CRM Login</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+
+</head>
+
+<body class="mainloginpage">
+
+<div class="login-wrapper">
+
+    <div class="login-left">
+
+        <div class="brand-icon">
+            <i class="bi bi-shield-lock-fill"></i>
+        </div>
+
+        <h1>Employee CRM</h1>
+
+        <p>
+            Secure role based login system for Super Admin, HR, Manager and Employee.
+            Manage attendance, salary, daily work and employee records easily.
+        </p>
+
+        <div class="feature-list">
+
+            <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Role wise dashboard access</span>
+            </div>
+
+            <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Secure employee management</span>
+            </div>
+
+            <div class="feature-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Attendance and payroll control</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="login-right">
+
+        <h3 class="form-title">Welcome Back</h3>
+        <p class="form-subtitle">
+            Login to continue your CRM account
+        </p>
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('login.post') }}">
+            @csrf
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Email Address
+                </label>
+
+                <div class="input-group-custom">
+                    <i class="bi bi-envelope"></i>
+
+                    <input type="email"
+                           name="email"
+                           value="{{ old('email') }}"
+                           class="form-control @error('email') is-invalid @enderror formcontroller"
+                           placeholder="Enter email">
+                </div>
+
+                @error('email')
+                <small class="text-danger">
+                    {{ $message }}
+                </small>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    Password
+                </label>
+
+                <div class="input-group-custom">
+                    <i class="bi bi-lock"></i>
+
+                    <input type="password"
+                           name="password"
+                           class="form-control @error('password') is-invalid @enderror formcontroller"
+                           placeholder="Enter password">
+                </div>
+
+                @error('password')
+                <small class="text-danger">
+                    {{ $message }}
+                </small>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-login w-100 mt-2 buttonlogin">
+                <i class="bi bi-box-arrow-in-right me-1"></i>
+                Login
+            </button>
+
+            <div class="text-center mt-4">
+                <span class="text-muted">New Employee?</span>
+
+                <a href="{{ url('/employee/register') }}"
+                   class="register-link">
+                    Register Here
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
 </html>
