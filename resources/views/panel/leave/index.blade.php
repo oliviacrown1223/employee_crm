@@ -16,11 +16,11 @@
         </span>
 
                 <h2 class="fw-bold mt-3 mb-1">
-                    @role('employee')
-                    My Leave
+                    @if(auth()->user()->hasRole('employee'))
+                        My Leave
                     @else
                         Leave Management
-                        @endrole
+                    @endif
                 </h2>
 
                 <p class="text-muted mb-0">
@@ -76,6 +76,7 @@
 
                         <input type="text"
                                id="leaveSearch"
+                               placeholder="Search employee..."
                                class="form-control leave-search-input ps-5">
 
                         <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
@@ -123,7 +124,9 @@
                         </thead>
 
                         <tbody>
-
+                        @if(auth()->user()->hasRole('super-admin')
+                       || auth()->user()->can('leave.view.self')
+                       || auth()->user()->can('leave.view.all'))
                         @forelse($leaves as $leave)
 
                             <tr class="border-bottom">
@@ -224,10 +227,13 @@
                                         || auth()->user()->can('leave.approve.all')
                                         || auth()->user()->can('leave.reject.all'))
 
-                                            @if($leave->approval_status != 'Approved')
+                                            @if($leave->approval_status == 'Pending'
+                                                && \Carbon\Carbon::parse($leave->leave_date)->gte(\Carbon\Carbon::today()))
+
                                                 @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('leave.approve.all'))
                                                     <form action="{{ route('leave.approve', $leave->id) }}"
-                                                          method="POST">
+                                                          method="POST"
+                                                          class="approve-confirm">
                                                         @csrf
 
                                                         <button type="submit"
@@ -237,12 +243,11 @@
                                                         </button>
                                                     </form>
                                                 @endif
-                                            @endif
 
-                                            @if($leave->approval_status != 'Rejected')
                                                 @if(auth()->user()->hasRole('super-admin') || auth()->user()->can('leave.reject.all'))
                                                     <form action="{{ route('leave.reject', $leave->id) }}"
-                                                          method="POST">
+                                                          method="POST"
+                                                          class="reject-confirm">
                                                         @csrf
 
                                                         <button type="submit"
@@ -251,8 +256,12 @@
                                                             Reject
                                                         </button>
                                                     </form>
+
                                                 @endif
+
                                             @endif
+
+                                        @endif
 
                                             @role('super-admin')
                                             <form action="{{ route('leave.destroy', $leave->id) }}"
@@ -269,7 +278,7 @@
                                             </form>
                                             @endrole
 
-                                        @endif
+
 
                                     </div>
 
@@ -295,7 +304,7 @@
                             </tr>
 
                         @endforelse
-
+                        @endif
                         </tbody>
 
                     </table>

@@ -137,7 +137,7 @@ class RoleController extends Controller
                 'leave.view.all',
                 'leave.approve.all',
                 'leave.reject.all',
-                'leave.export.all',
+
 
                 'performance.view.all',
                 'performance.manage.all',

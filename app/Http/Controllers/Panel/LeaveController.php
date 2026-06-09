@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\SuperAdmin\Leave;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class LeaveController extends Controller
@@ -13,6 +14,13 @@ class LeaveController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+
+        Leave::where('approval_status', 'Pending')
+            ->whereDate('leave_date', '<', Carbon::today())
+            ->update([
+                'approval_status' => 'Rejected',
+            ]);
 
         if ($user->hasAnyRole(['super-admin', 'hr'])) {
 
