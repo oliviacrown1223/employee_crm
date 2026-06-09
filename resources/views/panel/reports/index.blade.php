@@ -522,9 +522,9 @@
                             data-bs-dismiss="modal"></button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body p-0">
 
-                    <div class="table-responsive">
+                    <div class="table-responsive attendance-modal-scroll">
 
                         <table class="table table-hover align-middle">
                             <thead class="table-light">

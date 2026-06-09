@@ -1689,6 +1689,16 @@ body{
 /* Employee Edit End*/
 
 /* Attendace Index Start*/
+.attendance-modal-scroll {
+    max-height: 600px;
+
+    padding-left:55px;
+}
+
+.attendance-modal-scroll thead th {
+    top: 0;
+    z-index: 2;
+}
 
 .attendance-page .attendance-hero {
     background: linear-gradient(135deg, #111827, #2563eb);
