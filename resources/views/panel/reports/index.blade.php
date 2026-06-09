@@ -6,14 +6,18 @@
 
     <div class="container-fluid py-4">
 
-        <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-4">
+        <div class="report-hero mb-4">
 
             <div class="card-body p-4">
 
                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
                     <div>
-                        <h2 class="fw-bold mb-1 text-dark">
+                        <span class="report-badge">
+    <i class="bi bi-bar-chart-fill me-1"></i>
+    Reports Module
+</span>
+                        <h2 class="fw-bold mt-3 mb-1 text-white">
                             Reports & Analytics
                         </h2>
 
@@ -68,7 +72,7 @@
 
                 <div class="col-xl-4 col-md-6">
 
-                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden h-100">
+                    <div class="card report-stat-card report-blue h-100">
 
                         <div class="card-body p-4">
 
@@ -88,7 +92,7 @@
                                     </h1>
                                 </div>
 
-                                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box">
+                                <div class="report-icon">
                                     <i class="bi bi-people-fill text-primary fs-1"></i>
                                 </div>
 
@@ -106,7 +110,7 @@
 
                 <div class="col-xl-4 col-md-6">
 
-                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden h-100"
+                    <div class="card report-stat-card report-green h-100"
                          style="cursor:pointer"
                          data-bs-toggle="modal"
                          data-bs-target="#attendanceReportModal">
@@ -125,7 +129,7 @@
                                     </h1>
                                 </div>
 
-                                <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box">
+                                <div class="report-icon">
                                     <i class="bi bi-calendar-check-fill text-success fs-1"></i>
                                 </div>
 
@@ -143,7 +147,7 @@
                 @hasanyrole('super-admin|hr')
                 <div class="col-xl-4 col-md-6">
 
-                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden h-100">
+                    <div class="card report-stat-card report-orange h-100">
 
                         <div class="card-body p-4">
 
@@ -159,7 +163,7 @@
                                     </h1>
                                 </div>
 
-                                <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box">
+                                <div class="report-icon">
                                     <i class="bi bi-cash-stack text-warning fs-1"></i>
                                 </div>
 
@@ -174,7 +178,7 @@
 
                 <div class="col-xl-4 col-md-6">
 
-                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden h-100">
+                    <div class="card report-stat-card report-cyan h-100">
 
                         <div class="card-body p-4">
 
@@ -190,7 +194,7 @@
                                     </h1>
                                 </div>
 
-                                <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box">
+                                <div class="report-icon">
                                     <i class="bi bi-list-task text-info fs-1"></i>
                                 </div>
 
@@ -204,7 +208,7 @@
 
                 <div class="col-xl-4 col-md-6">
 
-                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden h-100">
+                    <div class="card report-stat-card report-red h-100">
 
                         <div class="card-body p-4">
 
@@ -220,7 +224,7 @@
                                     </h1>
                                 </div>
 
-                                <div class="bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box">
+                                <div class="report-icon">
                                     <i class="bi bi-graph-up-arrow text-danger fs-1"></i>
                                 </div>
 
@@ -235,7 +239,7 @@
                 @hasanyrole('super-admin|hr')
                 <div class="col-xl-4 col-md-6">
 
-                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden h-100">
+                    <div class="card report-stat-card report-gray h-100">
 
                         <div class="card-body p-4">
 
@@ -251,7 +255,7 @@
                                     </h1>
                                 </div>
 
-                                <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box">
+                                <div class="report-icon">
                                     <i class="bi bi-airplane-fill text-secondary fs-1"></i>
                                 </div>
 
@@ -266,9 +270,9 @@
 
             </div>
 
-            <div class="card border-0 shadow-lg rounded-4 overflow-hidden mt-5">
+            <div class="card report-table-card mt-5">
 
-                <div class="card-header bg-dark text-white border-0 p-4">
+                <div class="report-table-header">
 
                     <div class="d-flex justify-content-between align-items-center">
 

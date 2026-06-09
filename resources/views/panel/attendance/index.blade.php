@@ -4,45 +4,59 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 attendance-page">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="attendance-hero mb-4">
 
             <div>
-                <h3 class="fw-bold mb-1">
-                    @role('employee')
-                    My Attendance
-                    @elseifrole('manager')
-                    Team Attendance
+            <span class="attendance-badge">
+                <i class="bi bi-calendar-check-fill me-1"></i>
+                Attendance Module
+            </span>
+
+                <h3 class="fw-bold mt-3 mb-2">
+
+                    @if(auth()->user()->hasRole('employee'))
+                        My Attendance
+
+                    @elseif(auth()->user()->hasRole('manager'))
+                        Team Attendance
+
                     @else
                         Attendance Management
-                        @endrole
+                    @endif
+
                 </h3>
 
-                <p class="text-muted mb-0">
+                <p class="mb-0 opacity-75">
                     Role wise attendance tracking
                 </p>
             </div>
 
-         {{--   @hasanyrole('super-admin|hr')
+            @hasanyrole('super-admin|hr')
+            {{-- If needed, uncomment button --}}
+            {{--
             <button type="button"
-                    class="btn btn-primary rounded-3"
+                    class="btn btn-light rounded-pill px-4 fw-semibold shadow-sm"
                     data-bs-toggle="modal"
                     data-bs-target="#attendanceModal">
-                <i class="bi bi-plus-circle"></i>
+                <i class="bi bi-plus-circle me-1"></i>
                 Mark Attendance
             </button>
-            @endhasanyrole--}}
+            --}}
+            @endhasanyrole
 
         </div>
 
         @hasanyrole('super-admin|hr')
         <div class="modal fade" id="attendanceModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content rounded-4">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content attendance-modal">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title fw-bold">Mark Attendance</h5>
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-bold">
+                            Mark Attendance
+                        </h5>
 
                         <button type="button"
                                 class="btn-close"
@@ -55,10 +69,10 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label class="form-label">Employee</label>
+                                <label class="form-label fw-semibold">Employee</label>
 
                                 <select name="employee_id"
-                                        class="form-select"
+                                        class="form-select attendance-input"
                                         required>
                                     <option value="">Select Employee</option>
 
@@ -71,17 +85,17 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Status</label>
+                                <label class="form-label fw-semibold">Status</label>
 
                                 <select name="status"
-                                        class="form-select">
+                                        class="form-select attendance-input">
                                     <option value="present">Present</option>
                                     <option value="absent">Absent</option>
                                 </select>
                             </div>
 
                             <button type="submit"
-                                    class="btn btn-primary w-100 rounded-3">
+                                    class="btn btn-primary w-100 rounded-pill py-2 fw-semibold">
                                 Save Attendance
                             </button>
                         </form>
@@ -92,101 +106,89 @@
         </div>
         @endhasanyrole
 
-        <div class="row g-4 mb-5">
+        <div class="row g-4 mb-4">
 
             <div class="col-xl-3 col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 h-100">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="text-muted mb-2 fw-semibold">Total Employees</p>
-                                <h2 class="fw-bold mb-0">{{ $totalEmployees }}</h2>
-                            </div>
+                <div class="attendance-stat-card stat-blue">
+                    <div>
+                        <small>Total Employees</small>
+                        <h2>{{ $totalEmployees }}</h2>
+                    </div>
 
-                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box">
-                                <i class="bi bi-people-fill text-primary fs-2"></i>
-                            </div>
-                        </div>
+                    <div class="attendance-stat-icon">
+                        <i class="bi bi-people-fill"></i>
                     </div>
                 </div>
             </div>
 
             <div class="col-xl-3 col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 h-100">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="text-muted mb-2 fw-semibold">Present Today</p>
-                                <h2 class="fw-bold mb-0 text-success">{{ $presentToday }}</h2>
-                            </div>
+                <div class="attendance-stat-card stat-green">
+                    <div>
+                        <small>Present Today</small>
+                        <h2>{{ $presentToday }}</h2>
+                    </div>
 
-                            <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box">
-                                <i class="bi bi-check-circle-fill text-success fs-2"></i>
-                            </div>
-                        </div>
+                    <div class="attendance-stat-icon">
+                        <i class="bi bi-check-circle-fill"></i>
                     </div>
                 </div>
             </div>
 
             @hasanyrole('super-admin|hr|manager')
             <div class="col-xl-3 col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 h-100">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="text-muted mb-2 fw-semibold">Absent Today</p>
-                                <h2 class="fw-bold mb-0 text-danger">{{ $absentToday }}</h2>
-                            </div>
+                <div class="attendance-stat-card stat-red">
+                    <div>
+                        <small>Absent Today</small>
+                        <h2>{{ $absentToday }}</h2>
+                    </div>
 
-                            <div class="bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box">
-                                <i class="bi bi-x-circle-fill text-danger fs-2"></i>
-                            </div>
-                        </div>
+                    <div class="attendance-stat-icon">
+                        <i class="bi bi-x-circle-fill"></i>
                     </div>
                 </div>
             </div>
             @endhasanyrole
 
             <div class="col-xl-3 col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 h-100">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="text-muted mb-2 fw-semibold">Late Today</p>
-                                <h2 class="fw-bold mb-0 text-warning">{{ $lateToday }}</h2>
-                            </div>
+                <div class="attendance-stat-card stat-orange">
+                    <div>
+                        <small>Late Today</small>
+                        <h2>{{ $lateToday }}</h2>
+                    </div>
 
-                            <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center rounded-circle-Box"
-                                 style="">
-                                <i class="bi bi-alarm-fill text-warning fs-2"></i>
-                            </div>
-                        </div>
+                    <div class="attendance-stat-icon">
+                        <i class="bi bi-alarm-fill"></i>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="attendance-card">
 
-            <div class="card-header bg-white border-0 py-3 px-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5 class="mb-1 fw-bold">Attendance Records</h5>
-                        <small class="text-muted">Manage employee attendance activity</small>
-                    </div>
+            <div class="attendance-card-header">
 
-                    <span class="badge bg-primary px-3 py-2 rounded-pill">
-                    {{ $employees->count() }} Records
-                </span>
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        Attendance Records
+                    </h5>
+
+                    <small class="text-muted">
+                        Manage employee attendance activity
+                    </small>
                 </div>
+
+                <span class="attendance-count-pill">
+                {{ $employees->count() }} Records
+            </span>
+
             </div>
 
             <div class="table-responsive">
 
-                <table class="table align-middle mb-0">
+                <table class="table attendance-table align-middle mb-0">
 
-                    <thead class="table-light">
+                    <thead>
                     <tr>
                         <th class="ps-4">Employee</th>
                         <th>Date</th>
@@ -209,39 +211,51 @@
 
                         <tr>
                             <td class="ps-4">
-                                <h6 class="mb-0 fw-semibold">
-                                    {{ $employee->name }}
-                                </h6>
-                                <small class="text-muted">{{ $employee->email }}</small>
+                                <div class="attendance-user">
+                                    <div class="attendance-avatar">
+                                        {{ strtoupper(substr($employee->name, 0, 1)) }}
+                                    </div>
+
+                                    <div>
+                                        <h6 class="mb-0 fw-bold">
+                                            {{ $employee->name }}
+                                        </h6>
+                                        <small class="text-muted">{{ $employee->email }}</small>
+                                    </div>
+                                </div>
                             </td>
 
-                            <td>{{ $attendance->attendance_date ?? '-' }}</td>
+                            <td>
+                            <span class="date-pill">
+                                {{ $attendance->attendance_date ?? '-' }}
+                            </span>
+                            </td>
 
                             <td>
-                            <span class="text-success fw-semibold">
+                            <span class="time-pill checkin">
                                 {{ $attendance->check_in ?? '-' }}
                             </span>
                             </td>
 
                             <td>
-                            <span class="text-danger fw-semibold">
+                            <span class="time-pill checkout">
                                 {{ $attendance->check_out ?? '-' }}
                             </span>
                             </td>
 
                             <td>
-                            <span class="badge bg-light text-dark border">
+                            <span class="hours-pill">
                                 {{ $attendance->working_hours ?? 0 }} hrs
                             </span>
                             </td>
 
                             <td>
                                 @if($attendance && $attendance->is_late)
-                                    <span class="badge bg-danger-subtle text-danger border px-3 py-2">
+                                    <span class="attendance-badge-pill late-pill">
                                     Late
                                 </span>
                                 @else
-                                    <span class="badge bg-success-subtle text-success border px-3 py-2">
+                                    <span class="attendance-badge-pill ontime-pill">
                                     On Time
                                 </span>
                                 @endif
@@ -249,71 +263,72 @@
 
                             <td>
                                 @if($attendance && $attendance->status == 'present')
-                                    <span class="badge bg-success px-3 py-2">Present</span>
+                                    <span class="attendance-status present-pill">Present</span>
                                 @elseif($attendance && $attendance->status == 'absent')
-                                    <span class="badge bg-danger px-3 py-2">Absent</span>
+                                    <span class="attendance-status absent-pill">Absent</span>
                                 @else
-                                    <span class="badge bg-secondary px-3 py-2">Not Marked</span>
+                                    <span class="attendance-status notmarked-pill">Not Marked</span>
                                 @endif
                             </td>
 
                             <td class="text-center">
 
-                                <div class="d-flex align-items-center justify-content-center flex-wrap gap-1">
+                                <div class="d-flex align-items-center justify-content-center flex-wrap gap-2">
 
                                     @if(auth()->user()->hasAnyRole(['super-admin', 'hr'])
                                         || auth()->user()->can('attendance.mark.team')
                                         || auth()->user()->can('attendance.mark.self'))
 
                                         @if(!$attendance || !$attendance->check_in)
-                                            <button class="btn  btn-success btn-sm rounded-pill px-3 checkInBtn"
+                                            <button class="attendance-action-btn checkin-btn checkInBtn"
                                                     data-id="{{ $employee->id }}">
                                                 Check-In
                                             </button>
-
                                         @else
-                                            <button class="btn btn-secondary btn-sm rounded-pill px-3" disabled>
+                                            <button class="attendance-action-btn disabled-btn" disabled>
                                                 Checked-In
                                             </button>
                                         @endif
 
                                         @if($attendance && $attendance->check_in && !$attendance->check_out)
-                                            <button class="btn btn-danger btn-sm rounded-pill px-3  checkOutBtn"
+                                            <button class="attendance-action-btn checkout-btn checkOutBtn"
                                                     data-id="{{ $attendance->id }}">
                                                 Check-Out
                                             </button>
                                         @elseif($attendance && $attendance->check_out)
-                                            <button class="btn btn-dark btn-sm rounded-pill px-3" disabled>
+                                            <button class="attendance-action-btn completed-btn" disabled>
                                                 Completed
                                             </button>
                                         @endif
 
                                     @endif
 
-                                        @if(auth()->user()->hasAnyRole(['super-admin'])
-                                           || auth()->user()->can('attendance.edit.all'))
-                                    @if($attendance && $attendance->check_in)
-                                        <a href="{{ route('attendance.edit', $attendance->id) }}"
-                                           class="btn btn-warning btn-sm rounded-pill px-3">
-                                            Edit
-                                        </a>
-                                    @endif
+                                    @if(auth()->user()->hasAnyRole(['super-admin'])
+                                       || auth()->user()->can('attendance.edit.all'))
+                                        @if($attendance && $attendance->check_in)
+                                            <a href="{{ route('attendance.edit', $attendance->id) }}"
+                                               class="attendance-action-btn edit-attendance-btn">
+                                                Edit
+                                            </a>
                                         @endif
+                                    @endif
 
-                                        @if(auth()->user()->hasAnyRole(['super-admin'])
+                                    @if(auth()->user()->hasAnyRole(['super-admin'])
                                         || auth()->user()->can('attendance.approve.team')
                                         || auth()->user()->can('attendance.approve.all'))
-                                    @if($attendance && !$attendance->is_approved)
-                                        <button class="btn btn-primary btn-sm rounded-pill px-3  approveBtn"
-                                                data-id="{{ $attendance->id }}">
-                                            Approve
-                                        </button>
-                                    @elseif($attendance && $attendance->is_approved)
-                                        <span class="badge bg-success px-3 py-2">
+
+                                        @if($attendance && !$attendance->is_approved)
+                                            <button class="attendance-action-btn approve-btn approveBtn"
+                                                    data-id="{{ $attendance->id }}">
+                                                Approve
+                                            </button>
+                                        @elseif($attendance && $attendance->is_approved)
+                                            <span class="approved-pill">
                                             Approved
                                         </span>
-                                    @endif
                                         @endif
+
+                                    @endif
 
                                 </div>
 
@@ -324,6 +339,7 @@
 
                         <tr>
                             <td colspan="8" class="text-center py-5">
+                                <i class="bi bi-calendar-x fs-1 text-muted d-block mb-2"></i>
                                 <h5>No Employees Found</h5>
                             </td>
                         </tr>
@@ -339,7 +355,5 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-
 
 @endsection

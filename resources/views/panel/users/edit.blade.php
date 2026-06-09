@@ -4,28 +4,38 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 user-form-page">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="user-form-hero edit-user-hero mb-4">
 
             <div>
-                <h2 class="fw-bold mb-1">Edit User</h2>
-                <p class="text-muted mb-0">
-                    Update user account information and role
+            <span class="hero-badge">
+                <i class="bi bi-pencil-square me-1"></i>
+                Update Account
+            </span>
+
+                <h2 class="fw-bold mt-3 mb-2">
+                    Edit User
+                </h2>
+
+                <p class="mb-0 opacity-75">
+                    Update user account information, password and assigned role.
                 </p>
             </div>
 
             <a href="{{ route('users.index') }}"
-               class="btn btn-secondary rounded-3">
-                <i class="bi bi-arrow-left"></i>
+               class="btn btn-light rounded-pill px-4 py-2 fw-semibold shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i>
                 Back
             </a>
 
         </div>
 
         @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
+            <div class="alert alert-danger rounded-4 border-0 shadow-sm">
+                <strong>Please fix following errors:</strong>
+
+                <ul class="mb-0 mt-2">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -33,127 +43,181 @@
             </div>
         @endif
 
-        <div class="card border-0 shadow rounded-4">
+        <div class="premium-form-card">
 
-            <div class="card-header bg-warning">
-                <h5 class="mb-0 fw-bold text-dark">
-                    User Information
-                </h5>
+            <div class="premium-form-header">
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        User Information
+                    </h5>
+
+                    <small class="text-muted">
+                        Editing account:
+                        <strong>{{ $user->name }}</strong>
+                    </small>
+                </div>
+
+                <div class="form-header-icon warning-icon">
+                    <i class="bi bi-person-check"></i>
+                </div>
             </div>
 
-            <div class="card-body">
+            <form action="{{ route('users.update', $user->id) }}"
+                  method="POST"
+                  class="update-confirm"
+                  novalidate>
 
-                <form action="{{ route('users.update', $user->id) }}"
-                      method="POST"
-                     class="update-confirm">
+                @csrf
+                @method('PUT')
 
-                    @csrf
-                    @method('PUT')
+                <div class="premium-form-body">
 
-                    <div class="row">
+                    <div class="row g-4">
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6">
                             <label class="form-label fw-semibold">
                                 Full Name
                             </label>
 
-                            <input type="text"
-                                   name="name"
-                                   class="form-control"
-                                   value="{{ old('name', $user->name) }}"
-                                   required>
+                            <div class="input-icon-box">
+                                <i class="bi bi-person"></i>
+
+                                <input type="text"
+                                       name="name"
+                                       value="{{ old('name', $user->name) }}"
+                                       class="form-control premium-input @error('name') is-invalid @enderror"
+                                       placeholder="Enter full name"
+                                       maxlength="50"
+                                       oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'')">
+                            </div>
+
+                            @error('name')
+                            <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6">
                             <label class="form-label fw-semibold">
                                 Email Address
                             </label>
 
-                            <input type="email"
-                                   name="email"
-                                   class="form-control"
-                                   value="{{ old('email', $user->email) }}"
-                                   required>
+                            <div class="input-icon-box">
+                                <i class="bi bi-envelope"></i>
+
+                                <input type="email"
+                                       name="email"
+                                       value="{{ old('email', $user->email) }}"
+                                       class="form-control premium-input @error('email') is-invalid @enderror"
+                                       placeholder="example@email.com"
+                                       maxlength="100">
+                            </div>
+
+                            @error('email')
+                            <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6">
                             <label class="form-label fw-semibold">
                                 New Password
                             </label>
 
-                            <input type="password"
-                                   name="password"
-                                   class="form-control">
+                            <div class="input-icon-box">
+                                <i class="bi bi-lock"></i>
 
-                            <small class="text-muted">
+                                <input type="password"
+                                       name="password"
+                                       class="form-control premium-input @error('password') is-invalid @enderror"
+                                       placeholder="Leave blank to keep old password"
+                                       minlength="8">
+                            </div>
+
+                            <small class="text-muted d-block mt-1">
                                 Leave blank if you don't want to change password.
                             </small>
+
+                            @error('password')
+                            <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6">
                             <label class="form-label fw-semibold">
                                 Confirm New Password
                             </label>
 
-                            <input type="password"
-                                   name="password_confirmation"
-                                   class="form-control">
+                            <div class="input-icon-box">
+                                <i class="bi bi-shield-lock"></i>
+
+                                <input type="password"
+                                       name="password_confirmation"
+                                       class="form-control premium-input"
+                                       placeholder="Confirm new password"
+                                       minlength="8">
+                            </div>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6">
                             <label class="form-label fw-semibold">
                                 Role
                             </label>
 
-                            <select name="role"
-                                    class="form-select"
-                                    required>
+                            <div class="input-icon-box">
+                                <i class="bi bi-person-badge"></i>
 
-                                <option value="">Select Role</option>
+                                <select name="role"
+                                        class="form-select premium-input @error('role') is-invalid @enderror">
+                                    <option value="">Select Role</option>
 
-                                @foreach($roles as $role)
-                                    <option value="{{ $role->name }}"
-                                        {{ $user->hasRole($role->name) ? 'selected' : '' }}>
-                                        {{ ucfirst($role->name) }}
-                                    </option>
-                                @endforeach
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role->name }}"
+                                            {{ old('role', $user->roles->first()?->name) == $role->name ? 'selected' : '' }}>
+                                            {{ ucwords(str_replace('-', ' ', $role->name)) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                            </select>
+                            @error('role')
+                            <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6">
                             <label class="form-label fw-semibold">
                                 Current Role
                             </label>
 
-                            <input type="text"
-                                   class="form-control"
-                                   value="{{ ucfirst($user->roles->first()?->name ?? 'No Role') }}"
-                                   readonly>
+                            <div class="input-icon-box">
+                                <i class="bi bi-shield-check"></i>
+
+                                <input type="text"
+                                       class="form-control premium-input"
+                                       value="{{ ucwords(str_replace('-', ' ', $user->roles->first()?->name ?? 'No Role')) }}"
+                                       readonly>
+                            </div>
                         </div>
 
                     </div>
 
-                    <hr>
+                </div>
 
-                    <div class="text-end">
+                <div class="premium-form-footer">
 
-                        <a href="{{ route('users.index') }}"
-                           class="btn btn-light">
-                            Cancel
-                        </a>
+                    <a href="{{ route('users.index') }}"
+                       class="btn btn-light border rounded-pill px-4">
+                        Cancel
+                    </a>
 
-                        <button type="submit"
-                                class="btn btn-warning">
-                            <i class="bi bi-check-circle"></i>
-                            Update User
-                        </button>
+                    <button type="submit"
+                            class="btn btn-warning rounded-pill px-5 fw-semibold text-dark">
+                        <i class="bi bi-check-circle me-1"></i>
+                        Update User
+                    </button>
 
-                    </div>
+                </div>
 
-                </form>
-
-            </div>
+            </form>
 
         </div>
 

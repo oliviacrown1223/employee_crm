@@ -13,51 +13,7 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function index(Request $request)
-    {
-        $q = $request->q;
 
-        $employees = Employee::where('name', 'like', "%$q%")
-            ->orWhere('email', 'like', "%$q%")
-            ->get();
-
-        $users = User::where('name', 'like', "%$q%")
-            ->orWhere('email', 'like', "%$q%")
-            ->get();
-
-        $attendances = Attendance::with('employee')
-            ->where('status', 'like', "%$q%")
-            ->get();
-
-        $salaries = Salary::with('employee')
-            ->where('salary_month', 'like', "%$q%")
-            ->get();
-
-        $works = DailyWork::where('task_title', 'like', "%$q%")
-            ->get();
-
-        $performances = Performance::with('employee')
-            ->where('rating_grade', 'like', "%$q%")
-            ->get();
-
-        $leaves = Leave::with('employee')
-            ->where('leave_type', 'like', "%$q%")
-            ->get();
-
-        return view(
-            'search.index',
-            compact(
-                'q',
-                'employees',
-                'users',
-                'attendances',
-                'salaries',
-                'works',
-                'performances',
-                'leaves'
-            )
-        );
-    }
     public function liveSearch(Request $request)
     {
         $q = trim($request->q);

@@ -4,177 +4,232 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 user-page">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
+        <div class="premium-hero mb-4">
             <div>
-                <h2 class="fw-bold mb-1">User Management</h2>
-                <p class="text-muted mb-0">
-                    Manage HR, Manager and Employee Accounts
+            <span class="hero-badge">
+                <i class="bi bi-shield-check me-1"></i>
+                Admin Control
+            </span>
+
+                <h2 class="fw-bold mt-3 mb-2">
+                    User Management
+                </h2>
+
+                <p class="mb-0 opacity-75">
+                    Manage HR, Manager and Employee accounts with role based access.
                 </p>
             </div>
 
             <a href="{{ route('users.create') }}"
-               class="btn btn-primary rounded-3">
+               class="btn btn-light rounded-pill px-4 py-2 fw-semibold shadow-sm">
                 <i class="bi bi-plus-circle me-1"></i>
                 Add User
             </a>
+        </div>
+
+        <div class="row g-4 mb-4">
+
+            <div class="col-xl-3 col-md-6">
+                <div class="premium-stat stat-blue">
+                    <div>
+                        <p>Total Users</p>
+                        <h3>{{ $users->total() }}</h3>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="premium-stat stat-green">
+                    <div>
+                        <p>HR Users</p>
+                        <h3>{{ \App\Models\User::role('hr')->count() }}</h3>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="bi bi-person-badge-fill"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="premium-stat stat-orange">
+                    <div>
+                        <p>Managers</p>
+                        <h3>{{ \App\Models\User::role('manager')->count() }}</h3>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="bi bi-diagram-3-fill"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="premium-stat stat-cyan">
+                    <div>
+                        <p>Employees</p>
+                        <h3>{{ \App\Models\User::role('employee')->count() }}</h3>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="bi bi-person-workspace"></i>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
-        <div class="row mb-4">
+        <div class="premium-card">
 
-            <div class="col-md-3">
-                <div class="card border-0 shadow bg-primary text-white rounded-4">
-                    <div class="card-body">
-                        <h3 class="fw-bold">{{ $users->total() }}</h3>
-                        <p class="mb-0">Total Users</p>
-                    </div>
+            <div class="premium-card-header">
+                <div>
+                    <h5 class="fw-bold mb-1">User Directory</h5>
+                    <small class="text-muted">All system users and their assigned roles</small>
                 </div>
+
+                <span class="total-pill">
+                {{ $users->total() }} Users
+            </span>
             </div>
 
-            <div class="col-md-3">
-                <div class="card border-0 shadow bg-success text-white rounded-4">
-                    <div class="card-body">
-                        <h3 class="fw-bold">
-                            {{ \App\Models\User::role('hr')->count() }}
-                        </h3>
-                        <p class="mb-0">HR Users</p>
-                    </div>
-                </div>
-            </div>
+            <div class="table-responsive">
 
-            <div class="col-md-3">
-                <div class="card border-0 shadow bg-warning text-dark rounded-4">
-                    <div class="card-body">
-                        <h3 class="fw-bold">
-                            {{ \App\Models\User::role('manager')->count() }}
-                        </h3>
-                        <p class="mb-0">Managers</p>
-                    </div>
-                </div>
-            </div>
+                <table class="table premium-table align-middle mb-0">
 
-            <div class="col-md-3">
-                <div class="card border-0 shadow bg-info text-white rounded-4">
-                    <div class="card-body">
-                        <h3 class="fw-bold">
-                            {{ \App\Models\User::role('employee')->count() }}
-                        </h3>
-                        <p class="mb-0">Employees</p>
-                    </div>
-                </div>
-            </div>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Joined</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
 
-        </div>
+                    <tbody>
 
-        <div class="card border-0 shadow rounded-4">
+                    @forelse($users as $user)
 
-            <div class="card-header bg-white">
-                <h5 class="mb-0 fw-bold">User List</h5>
-            </div>
+                        @php
+                            $role = $user->getRoleNames()->first();
+                            $initial = strtoupper(substr($user->name, 0, 1));
+                        @endphp
 
-            <div class="card-body">
-
-                <div class="table-responsive">
-
-                    <table class="table table-hover align-middle">
-
-                        <thead class="table-light">
                         <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Created</th>
-                            <th width="180">Actions</th>
-                        </tr>
-                        </thead>
+                            <td>
+                            <span class="row-number">
+                                {{ $loop->iteration }}
+                            </span>
+                            </td>
 
-                        <tbody>
+                            <td>
+                                <div class="user-info">
+                                    <div class="avatar-circle">
+                                        {{ $initial }}
+                                    </div>
 
-                        @forelse($users as $user)
+                                    <div>
+                                        <h6 class="mb-0 fw-bold">
+                                            {{ $user->name }}
+                                        </h6>
+                                        <small class="text-muted">
+                                            Active account
+                                        </small>
+                                    </div>
+                                </div>
+                            </td>
 
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
+                            <td>
+                            <span class="email-text">
+                                {{ $user->email }}
+                            </span>
+                            </td>
 
-                                <td class="fw-semibold">
-                                    {{ $user->name }}
-                                </td>
+                            <td>
+                                @if($role == 'super-admin')
+                                    <span class="role-badge role-dark">Super Admin</span>
+                                @elseif($role == 'hr')
+                                    <span class="role-badge role-green">HR</span>
+                                @elseif($role == 'manager')
+                                    <span class="role-badge role-orange">Manager</span>
+                                @elseif($role == 'employee')
+                                    <span class="role-badge role-blue">Employee</span>
+                                @else
+                                    <span class="role-badge role-muted">No Role</span>
+                                @endif
+                            </td>
 
-                                <td>{{ $user->email }}</td>
+                            <td>
+                            <span class="date-text">
+                                {{ $user->created_at->format('d M Y') }}
+                            </span>
+                            </td>
 
-                                <td>
-                                    @php
-                                        $role = $user->getRoleNames()->first();
-                                    @endphp
-
-                                    <span class="badge bg-primary">
-                                    {{ ucfirst($role ?? 'No Role') }}
-                                </span>
-                                </td>
-
-                                <td>
-                                    {{ $user->created_at->format('d M Y') }}
-                                </td>
-
-                                <td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
 
                                     @if(!$user->hasRole('super-admin'))
+
                                         <a href="{{ route('users.edit', $user->id) }}"
-                                           class="btn btn-sm btn-warning rounded-3">
+                                           class="action-btn edit-btn">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
 
                                         <form action="{{ route('users.destroy', $user->id) }}"
                                               method="POST"
-                                              class="d-inline delete-confirm"
-                                              >
-
+                                              class="d-inline delete-confirm">
                                             @csrf
                                             @method('DELETE')
 
                                             <button type="submit"
-                                                    class="btn btn-sm btn-danger rounded-3">
+                                                    class="action-btn delete-btn">
                                                 <i class="bi bi-trash"></i>
                                             </button>
-
                                         </form>
+
                                     @else
-                                        <span class="badge bg-dark">
+
+                                        <span class="protected-pill">
+                                        <i class="bi bi-lock-fill me-1"></i>
                                         Protected
                                     </span>
+
                                     @endif
 
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
 
-                        @empty
+                    @empty
 
-                            <tr>
-                                <td colspan="6"
-                                    class="text-center text-muted py-4">
-                                    No Users Found
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <div class="empty-box">
+                                    <i class="bi bi-person-x"></i>
+                                    <h5 class="fw-bold mt-3">No Users Found</h5>
+                                    <p class="text-muted mb-0">Create your first user account.</p>
+                                </div>
+                            </td>
+                        </tr>
 
-                        @endforelse
+                    @endforelse
 
-                        </tbody>
+                    </tbody>
 
-                    </table>
+                </table>
 
-                </div>
+            </div>
 
-                <div class="mt-3">
-                    {{ $users->links() }}
-                </div>
-
+            <div class="premium-footer">
+                {{ $users->links() }}
             </div>
 
         </div>
 
     </div>
+
 
 @endsection

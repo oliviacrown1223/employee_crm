@@ -4,25 +4,56 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 leave-create-page">
+
+        <div class="leave-create-hero mb-4">
+
+            <div>
+            <span class="leave-create-badge">
+                <i class="bi bi-calendar-plus me-1"></i>
+                Leave Module
+            </span>
+
+                <h2 class="fw-bold mt-3 mb-2">
+                    Apply Leave
+                </h2>
+
+                <p class="mb-0 opacity-75">
+                    Submit employee leave request
+                </p>
+            </div>
+
+            <a href="{{ route('leave.index') }}"
+               class="btn btn-light rounded-pill px-4 fw-semibold shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i>
+                Back
+            </a>
+
+        </div>
 
         <div class="row justify-content-center">
 
             <div class="col-xl-8">
 
-                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="leave-create-card">
 
-                    <div class="bg-primary bg-gradient p-4">
-                        <h3 class="fw-bold text-white mb-1">
-                            Apply Leave
-                        </h3>
+                    <div class="leave-create-card-header">
+                        <div>
+                            <h5 class="fw-bold mb-1">
+                                Leave Information
+                            </h5>
 
-                        <p class="text-white opacity-75 mb-0">
-                            Submit employee leave request
-                        </p>
+                            <small class="text-muted">
+                                Fill leave details carefully
+                            </small>
+                        </div>
+
+                        <div class="leave-create-icon">
+                            <i class="bi bi-calendar2-check"></i>
+                        </div>
                     </div>
 
-                    <div class="card-body p-4 p-lg-5">
+                    <div class="leave-create-body">
 
                         <form method="POST"
                               action="{{ route('leave.store') }}"
@@ -38,22 +69,26 @@
                                         Employee
                                     </label>
 
-                                    <select name="employee_id"
-                                            class="form-select bg-light border-0 py-3 @error('employee_id') is-invalid @enderror">
+                                    <div class="leave-input-box">
+                                        <i class="bi bi-person"></i>
 
-                                        <option value="">Select Employee</option>
+                                        <select name="employee_id"
+                                                class="form-select leave-input @error('employee_id') is-invalid @enderror">
 
-                                        @foreach($employees as $employee)
-                                            <option value="{{ $employee->id }}"
-                                                {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
-                                                {{ $employee->name }}
-                                            </option>
-                                        @endforeach
+                                            <option value="">Select Employee</option>
 
-                                    </select>
+                                            @foreach($employees as $employee)
+                                                <option value="{{ $employee->id }}"
+                                                    {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                                                    {{ $employee->name }}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
 
                                     @error('employee_id')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 @endhasanyrole
@@ -63,27 +98,31 @@
                                         Leave Type
                                     </label>
 
-                                    <select name="leave_type"
-                                            class="form-select bg-light border-0 py-3 @error('leave_type') is-invalid @enderror">
+                                    <div class="leave-input-box">
+                                        <i class="bi bi-calendar-range"></i>
 
-                                        <option value="">Select Leave Type</option>
+                                        <select name="leave_type"
+                                                class="form-select leave-input @error('leave_type') is-invalid @enderror">
 
-                                        <option value="Sick Leave" {{ old('leave_type') == 'Sick Leave' ? 'selected' : '' }}>
-                                            Sick Leave
-                                        </option>
+                                            <option value="">Select Leave Type</option>
 
-                                        <option value="Casual Leave" {{ old('leave_type') == 'Casual Leave' ? 'selected' : '' }}>
-                                            Casual Leave
-                                        </option>
+                                            <option value="Sick Leave" {{ old('leave_type') == 'Sick Leave' ? 'selected' : '' }}>
+                                                Sick Leave
+                                            </option>
 
-                                        <option value="Emergency Leave" {{ old('leave_type') == 'Emergency Leave' ? 'selected' : '' }}>
-                                            Emergency Leave
-                                        </option>
+                                            <option value="Casual Leave" {{ old('leave_type') == 'Casual Leave' ? 'selected' : '' }}>
+                                                Casual Leave
+                                            </option>
 
-                                    </select>
+                                            <option value="Emergency Leave" {{ old('leave_type') == 'Emergency Leave' ? 'selected' : '' }}>
+                                                Emergency Leave
+                                            </option>
+
+                                        </select>
+                                    </div>
 
                                     @error('leave_type')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -92,13 +131,17 @@
                                         Leave Date
                                     </label>
 
-                                    <input type="date"
-                                           name="leave_date"
-                                           value="{{ old('leave_date') }}"
-                                           class="form-control bg-light border-0 py-3 @error('leave_date') is-invalid @enderror">
+                                    <div class="leave-input-box">
+                                        <i class="bi bi-calendar-event"></i>
+
+                                        <input type="date"
+                                               name="leave_date"
+                                               value="{{ old('leave_date') }}"
+                                               class="form-control leave-input @error('leave_date') is-invalid @enderror">
+                                    </div>
 
                                     @error('leave_date')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -107,27 +150,32 @@
                                         Reason
                                     </label>
 
-                                    <textarea name="reason"
-                                              rows="5"
-                                              class="form-control bg-light border-0 py-3 @error('reason') is-invalid @enderror"
-                                              placeholder="Enter leave reason">{{ old('reason') }}</textarea>
+                                    <div class="leave-input-box textarea-box">
+                                        <i class="bi bi-file-text"></i>
+
+                                        <textarea name="reason"
+                                                  rows="5"
+                                                  class="form-control leave-input @error('reason') is-invalid @enderror"
+                                                  placeholder="Enter leave reason">{{ old('reason') }}</textarea>
+                                    </div>
 
                                     @error('reason')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                             </div>
 
-                            <div class="mt-5 d-flex justify-content-end gap-3">
+                            <div class="leave-create-actions mt-5">
 
                                 <a href="{{ route('leave.index') }}"
-                                   class="btn btn-light border px-4 py-3 rounded-pill">
+                                   class="btn btn-light border rounded-pill px-5 py-3">
                                     Cancel
                                 </a>
 
                                 <button type="submit"
-                                        class="btn btn-primary px-5 py-3 rounded-pill fw-bold">
+                                        class="btn btn-primary rounded-pill px-5 py-3 fw-bold">
+                                    <i class="bi bi-check-circle me-1"></i>
                                     Apply Leave
                                 </button>
 

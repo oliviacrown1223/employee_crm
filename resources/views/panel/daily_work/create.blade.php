@@ -4,30 +4,61 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 daily-create-page">
+
+        <div class="daily-create-hero mb-4">
+
+            <div>
+            <span class="daily-create-badge">
+                <i class="bi bi-journal-plus me-1"></i>
+                Daily Work Module
+            </span>
+
+                <h2 class="fw-bold mt-3 mb-2">
+                    Daily Work Management
+                </h2>
+
+                <p class="mb-0 opacity-75">
+                    Assign and manage employee daily tasks professionally
+                </p>
+            </div>
+
+            <a href="{{ route('daily-work.index') }}"
+               class="btn btn-light rounded-pill px-4 fw-semibold shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i>
+                Back
+            </a>
+
+        </div>
 
         <div class="row justify-content-center">
 
             <div class="col-xl-10">
 
-                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="daily-create-card">
 
-                    <div class="bg-primary bg-gradient p-4">
-                        <h3 class="fw-bold text-white mb-1">
-                            Daily Work Management
-                        </h3>
+                    <div class="daily-create-card-header">
+                        <div>
+                            <h5 class="fw-bold mb-1">
+                                Work Information
+                            </h5>
 
-                        <p class="text-white opacity-75 mb-0">
-                            Assign and manage employee daily tasks professionally
-                        </p>
+                            <small class="text-muted">
+                                Fill task details and assign employee work
+                            </small>
+                        </div>
+
+                        <div class="daily-create-icon">
+                            <i class="bi bi-clipboard-check"></i>
+                        </div>
                     </div>
 
-                    <div class="card-body p-4 p-lg-5">
+                    <div class="daily-create-body">
 
                         <form method="POST"
                               action="{{ route('daily-work.store') }}"
                               id="dailyWorkForm"
-                             class="create-confirm">
+                              class="create-confirm">
 
                             @csrf
 
@@ -38,14 +69,18 @@
                                         Task Title
                                     </label>
 
-                                    <input type="text"
-                                           name="task_title"
-                                           value="{{ old('task_title') }}"
-                                           placeholder="Enter Task Title"
-                                           class="form-control bg-light border-0 py-3 @error('task_title') is-invalid @enderror">
+                                    <div class="daily-create-input-box">
+                                        <i class="bi bi-card-text"></i>
+
+                                        <input type="text"
+                                               name="task_title"
+                                               value="{{ old('task_title') }}"
+                                               placeholder="Enter Task Title"
+                                               class="form-control daily-create-input @error('task_title') is-invalid @enderror">
+                                    </div>
 
                                     @error('task_title')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -54,16 +89,20 @@
                                         Hours Worked
                                     </label>
 
-                                    <input type="number"
-                                           step="0.1"
-                                           name="hours_worked"
-                                           id="hours_worked"
-                                           value="{{ old('hours_worked') }}"
-                                           placeholder="Enter Hours Worked"
-                                           class="form-control bg-light border-0 py-3 @error('hours_worked') is-invalid @enderror">
+                                    <div class="daily-create-input-box">
+                                        <i class="bi bi-clock"></i>
+
+                                        <input type="number"
+                                               step="0.1"
+                                               name="hours_worked"
+                                               id="hours_worked"
+                                               value="{{ old('hours_worked') }}"
+                                               placeholder="Enter Hours Worked"
+                                               class="form-control daily-create-input @error('hours_worked') is-invalid @enderror">
+                                    </div>
 
                                     @error('hours_worked')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -72,13 +111,17 @@
                                         Work Date
                                     </label>
 
-                                    <input type="date"
-                                           name="work_date"
-                                           value="{{ old('work_date') }}"
-                                           class="form-control bg-light border-0 py-3 @error('work_date') is-invalid @enderror">
+                                    <div class="daily-create-input-box">
+                                        <i class="bi bi-calendar-event"></i>
+
+                                        <input type="date"
+                                               name="work_date"
+                                               value="{{ old('work_date') }}"
+                                               class="form-control daily-create-input @error('work_date') is-invalid @enderror">
+                                    </div>
 
                                     @error('work_date')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
@@ -88,24 +131,26 @@
                                         Select Employee
                                     </label>
 
-                                    <select name="employee_id"
-                                            class="form-select bg-light border-0 py-3 @error('employee_id') is-invalid @enderror">
+                                    <div class="daily-create-input-box">
+                                        <i class="bi bi-person"></i>
 
-                                        <option value="">Select Employee</option>
+                                        <select name="employee_id"
+                                                class="form-select daily-create-input @error('employee_id') is-invalid @enderror">
 
-                                        @foreach($employees as $employee)
-                                            <option value="{{ $employee->id }}"
-                                                {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                                            <option value="">Select Employee</option>
 
-                                                {{ $employee->name }}
+                                            @foreach($employees as $employee)
+                                                <option value="{{ $employee->id }}"
+                                                    {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                                                    {{ $employee->name }}
+                                                </option>
+                                            @endforeach
 
-                                            </option>
-                                        @endforeach
-
-                                    </select>
+                                        </select>
+                                    </div>
 
                                     @error('employee_id')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 @endhasanyrole
@@ -115,51 +160,56 @@
                                         Task Description
                                     </label>
 
-                                    <textarea name="task_description"
-                                              rows="5"
-                                              placeholder="Enter detailed task description..."
-                                              class="form-control bg-light border-0 py-3 @error('task_description') is-invalid @enderror">{{ old('task_description') }}</textarea>
+                                    <div class="daily-create-input-box textarea-box">
+                                        <i class="bi bi-file-text"></i>
+
+                                        <textarea name="task_description"
+                                                  rows="5"
+                                                  placeholder="Enter detailed task description..."
+                                                  class="form-control daily-create-input @error('task_description') is-invalid @enderror">{{ old('task_description') }}</textarea>
+                                    </div>
 
                                     @error('task_description')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="col-12">
-                                    <div class="bg-light border rounded-4 p-4">
-                                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                    <div class="work-summary-card">
 
-                                            <div>
-                                                <h5 class="fw-bold mb-1">
-                                                    Work Summary
-                                                </h5>
+                                        <div>
+                                        <span class="work-summary-label">
+                                            Work Summary
+                                        </span>
 
-                                                <small class="text-muted">
-                                                    Live task preview
-                                                </small>
-                                            </div>
+                                            <h5 class="fw-bold mb-1">
+                                                Live task preview
+                                            </h5>
 
-                                            <div class="text-end">
-                                                <div class="fw-bold text-primary fs-4">
-                                                    <span id="previewHours">0</span> Hours
-                                                </div>
-                                            </div>
-
+                                            <small>
+                                                Total working hours entered by employee
+                                            </small>
                                         </div>
+
+                                        <div class="work-summary-hours">
+                                            <span id="previewHours">0</span> Hours
+                                        </div>
+
                                     </div>
                                 </div>
 
                             </div>
 
-                            <div class="mt-5 d-flex justify-content-end gap-3">
+                            <div class="daily-create-actions mt-5">
 
                                 <a href="{{ route('daily-work.index') }}"
-                                   class="btn btn-light border px-4 py-3 rounded-pill fw-semibold">
+                                   class="btn btn-light border rounded-pill px-5 py-3 fw-semibold">
                                     Cancel
                                 </a>
 
                                 <button type="submit"
-                                        class="btn btn-primary px-5 py-3 rounded-pill fw-bold shadow-sm">
+                                        class="btn btn-primary rounded-pill px-5 py-3 fw-bold shadow-sm">
+                                    <i class="bi bi-check-circle me-1"></i>
                                     Submit Work
                                 </button>
 

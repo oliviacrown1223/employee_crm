@@ -4,12 +4,17 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 salary-page">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="salary-hero mb-4">
 
             <div>
-                <h2 class="fw-bold">
+            <span class="salary-hero-badge">
+                <i class="bi bi-wallet2 me-1"></i>
+                Payroll Module
+            </span>
+
+                <h2 class="fw-bold mt-3 mb-2">
                     @role('employee')
                     My Salary
                     @else
@@ -17,123 +22,141 @@
                         @endrole
                 </h2>
 
-                <p class="text-muted">
+                <p class="mb-0 opacity-75">
                     Employee Salary Management
                 </p>
             </div>
 
-            <div class="d-flex gap-2">
+            <div class="d-flex gap-2 flex-wrap">
 
-
-
-
-                @if(auth()->user()->hasAnyRole(['super-admin'])
-                || auth()->user()->can('salary.export.all'))
-                <a href="{{ route('salary.export') }}"
-                   class="btn btn-success rounded-3">
-                    Export Excel
-                </a>
+                @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->can('salary.export.all'))
+                    <a href="{{ route('salary.export') }}"
+                       class="btn btn-light rounded-pill px-4 fw-semibold shadow-sm">
+                        <i class="bi bi-file-earmark-excel me-1"></i>
+                        Export Excel
+                    </a>
                 @endif
-                @if(auth()->user()->hasAnyRole(['super-admin'])
-              || auth()->user()->can('salary.generate.all'))
-                <a href="{{ route('salary.create') }}"
-                   class="btn btn-primary rounded-3">
-                    Generate Salary
-                </a>
+
+                @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->can('salary.generate.all'))
+                    <a href="{{ route('salary.create') }}"
+                       class="btn btn-success rounded-pill px-4 fw-semibold shadow-sm">
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Generate Salary
+                    </a>
                 @endif
 
                 @if(auth()->user()->hasAnyRole(['super-admin', 'hr', 'manager']) || auth()->user()->can('salary.payslip.download.self'))
-                <button type="button"
-                        class="btn btn-dark rounded-3"
-                        data-bs-toggle="modal"
-                        data-bs-target="#payslipModal">
-                    Download Payslip
-                </button>
+                    <button type="button"
+                            class="btn btn-dark rounded-pill px-4 fw-semibold shadow-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#payslipModal">
+                        <i class="bi bi-download me-1"></i>
+                        Download Payslip
+                    </button>
                 @endif
+
             </div>
 
         </div>
 
-        <div class="row mb-4">
+        <div class="row g-4 mb-4">
 
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0 rounded-4">
-                    <div class="card-body">
-                        <h6 class="text-muted">Total Payroll</h6>
-                        <h3 class="fw-bold text-primary">
-                            ₹{{ number_format($totalSalary, 2) }}
-                        </h3>
+            <div class="col-lg-4 col-md-6">
+                <div class="salary-stat-card salary-total">
+                    <div>
+                        <small>Total Payroll</small>
+                        <h3>₹{{ number_format($totalSalary, 2) }}</h3>
+                    </div>
+
+                    <div class="salary-stat-icon">
+                        <i class="bi bi-cash-stack"></i>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0 rounded-4">
-                    <div class="card-body">
-                        <h6 class="text-muted">Paid Salary</h6>
-                        <h3 class="fw-bold text-success">
-                            ₹{{ number_format($totalPaid, 2) }}
-                        </h3>
+            <div class="col-lg-4 col-md-6">
+                <div class="salary-stat-card salary-paid">
+                    <div>
+                        <small>Paid Salary</small>
+                        <h3>₹{{ number_format($totalPaid, 2) }}</h3>
+                    </div>
+
+                    <div class="salary-stat-icon">
+                        <i class="bi bi-check-circle-fill"></i>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card shadow-sm border-0 rounded-4">
-                    <div class="card-body">
-                        <h6 class="text-muted">Pending Salary</h6>
-                        <h3 class="fw-bold text-danger">
-                            ₹{{ number_format($totalPending, 2) }}
-                        </h3>
+            <div class="col-lg-4 col-md-6">
+                <div class="salary-stat-card salary-pending">
+                    <div>
+                        <small>Pending Salary</small>
+                        <h3>₹{{ number_format($totalPending, 2) }}</h3>
+                    </div>
+
+                    <div class="salary-stat-icon">
+                        <i class="bi bi-hourglass-split"></i>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
-            <div class="card-body">
+        <div class="salary-filter-card mb-4">
 
-                <div class="row g-3">
+            <div class="salary-filter-header">
+                <div>
+                    <h5 class="fw-bold mb-1">Filter Payroll</h5>
+                    <small class="text-muted">Search employee salary records</small>
+                </div>
+            </div>
 
-                    @hasanyrole('super-admin|hr')
-                    <div class="col-md-5">
-                        <div class="input-group">
-                            <span class="input-group-text bg-white">
-                                <i class="bi bi-search"></i>
-                            </span>
+            <div class="row g-3">
 
-                            <input type="text"
-                                   id="search"
-                                   class="form-control"
-                                   placeholder="Search employee...">
-                        </div>
+                @hasanyrole('super-admin|hr')
+                <div class="col-md-5">
+                    <div class="salary-input-group">
+                    <span>
+                        <i class="bi bi-search"></i>
+                    </span>
+
+                        <input type="text"
+                               id="search"
+                               class="form-control"
+                               placeholder="Search employee...">
                     </div>
-                    @endhasanyrole
+                </div>
+                @endhasanyrole
 
-                    <div class="col-md-3">
-                        <div class="input-group">
-                        <span class="input-group-text bg-white">
-                            <i class="bi bi-calendar-month"></i>
-                        </span>
+                <div class="col-md-3">
+                    <div class="salary-input-group">
+                    <span>
+                        <i class="bi bi-calendar-month"></i>
+                    </span>
 
-                            <input type="month"
-                                   id="month"
-                                   class="form-control">
-                        </div>
+                        <input type="month"
+                               id="month"
+                               class="form-control">
                     </div>
-
                 </div>
 
             </div>
+
         </div>
 
-        <div class="card border-0 shadow-sm rounded-4">
-            <div class="card-body">
-                <div id="salaryTable">
-                    @include('panel.salary.table')
+        <div class="salary-table-card">
+
+            <div class="salary-table-header">
+                <div>
+                    <h5 class="fw-bold mb-1">Salary Records</h5>
+                    <small class="text-muted">Monthly payroll overview</small>
                 </div>
             </div>
+
+            <div id="salaryTable">
+                @include('panel.salary.table')
+            </div>
+
         </div>
 
     </div>
@@ -145,10 +168,12 @@
 
         <div class="modal-dialog modal-dialog-centered">
 
-            <div class="modal-content border-0 rounded-4">
+            <div class="modal-content salary-modal">
 
-                <div class="modal-header">
-                    <h5 class="modal-title">Download Payslip</h5>
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">
+                        Download Payslip
+                    </h5>
 
                     <button type="button"
                             class="btn-close"
@@ -162,7 +187,7 @@
                         Select employee salary payslip.
                     </p>
 
-                    <select class="form-select mb-3"
+                    <select class="form-select salary-modal-input mb-3"
                             id="salary_id">
 
                         <option value="">
@@ -181,7 +206,8 @@
 
                     <button type="button"
                             id="downloadPayslip"
-                            class="btn btn-dark w-100">
+                            class="btn btn-dark w-100 rounded-pill py-2 fw-semibold">
+                        <i class="bi bi-download me-1"></i>
                         Download PDF
                     </button>
 

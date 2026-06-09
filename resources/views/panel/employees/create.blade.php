@@ -6,24 +6,44 @@
 
     <div class="container-fluid">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="employee-create-header mb-4">
 
             <div>
-                <h3 class="fw-bold mb-1">Add Employee</h3>
-                <p class="text-muted mb-0">Create new employee profile</p>
+        <span class="page-badge">
+            <i class="bi bi-person-plus-fill me-1"></i>
+            Employee Module
+        </span>
+
+                <h2 class="fw-bold mt-3 mb-1">
+                    Add Employee
+                </h2>
+
+                <p class="text-light opacity-75 mb-0">
+                    Create new employee profile
+                </p>
             </div>
 
             <a href="{{ route('employees.index') }}"
-               class="btn btn-outline-dark rounded-3">
+               class="btn btn-light rounded-pill px-4 shadow-sm">
                 <i class="bi bi-arrow-left me-1"></i>
                 Back
             </a>
 
         </div>
 
-        <div class="card border-0 shadow-sm rounded-4">
+        <div class="employee-form-card">
             <div class="card-body">
+                <div class="mb-4">
 
+                    <h4 class="fw-bold mb-1">
+                        Employee Information
+                    </h4>
+
+                    <small class="text-muted">
+                        Fill all required details carefully.
+                    </small>
+
+                </div>
                 <form method="POST"
                       action="{{ route('employees.store') }}"
                       enctype="multipart/form-data"
@@ -120,14 +140,20 @@
 
                     </div>
 
-                    <div class="mt-4 d-flex gap-2">
-                        <button type="submit" class="btn btn-primary rounded-3 px-4">
+                    <div class="employee-btn-group mt-5">
+                        <button type="submit"
+                                class="btn btn-primary px-5 rounded-pill shadow-sm">
+
                             <i class="bi bi-save me-1"></i>
                             Save Employee
+
                         </button>
 
-                        <a href="{{ route('employees.index') }}" class="btn btn-light border rounded-3 px-4">
+                        <a href="{{ route('employees.index') }}"
+                           class="btn btn-light border px-5 rounded-pill">
+
                             Cancel
+
                         </a>
                     </div>
                 </form>

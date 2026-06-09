@@ -9,8 +9,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-
-
 Route::middleware('guest')->group(function () {
 
     Route::get('/login', [AuthController::class, 'showLogin'])
@@ -30,7 +28,6 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/profile', [AdminProfileController::class, 'index'])
@@ -43,12 +40,10 @@ Route::middleware(['auth'])->group(function () {
         ->name('admin.password.update');
 
 });
+
 Route::get('/employee/register', [AuthController::class, 'showEmployeeRegister']);
 Route::post('/employee/register', [AuthController::class, 'employeeRegister']);
 
 
-
-Route::get('/search', [SearchController::class, 'index'])
-    ->name('search.global');
 Route::get('/global-live-search', [SearchController::class, 'liveSearch'])
     ->name('search.live');

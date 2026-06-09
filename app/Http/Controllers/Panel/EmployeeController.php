@@ -180,4 +180,58 @@ class EmployeeController extends Controller
             'employees_' . date('Y-m-d_H-i-s') . '.xlsx'
         );
     }
+    public function liveSearch(Request $request)
+    {
+        $q = trim($request->q);
+
+        if ($q == '') {
+            return response()->json([]);
+        }
+
+        $results = collect();
+
+        /*
+        |--------------------------------------------------------------------------
+        | EMPLOYEES
+        |--------------------------------------------------------------------------
+        */
+
+        $employees = Employee::where(function ($query) use ($q) {
+
+            $query->where('name', 'like', "%{$q}%")
+                ->orWhere('email', 'like', "%{$q}%")
+                ->orWhere('mobile', 'like', "%{$q}%")
+                ->orWhere('department', 'like', "%{$q}%")
+                ->orWhere('designation', 'like', "%{$q}%")
+                ->orWhere('salary', 'like', "%{$q}%")
+                ->orWhere('status', 'like', "%{$q}%")
+                ->orWhere('address', 'like', "%{$q}%")
+                ->orWhere('joining_date', 'like', "%{$q}%");
+
+        })
+            ->limit(10)
+            ->get();
+
+        foreach ($employees as $employee) {
+
+            $results->push([
+
+                'title' => $employee->name,
+
+                'subtitle' =>
+                    $employee->email .
+                    ' | ' .
+                    $employee->department .
+                    ' | ' .
+                    $employee->designation,
+
+                'type' => 'Employee',
+
+                'url' => route('employees.show', $employee->id),
+
+            ]);
+        }
+
+        return response()->json($results->values());
+    }
 }

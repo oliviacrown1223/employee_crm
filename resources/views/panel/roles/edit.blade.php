@@ -4,107 +4,120 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 role-form-page">
 
-        <div class="card border-0 shadow-lg rounded-4 mb-4 overflow-hidden">
-            <div class="card-body p-4 bg-primary text-white">
+        <div class="role-form-hero edit-role-hero mb-4">
 
-                <div class="d-flex justify-content-between align-items-center">
+            <div>
+            <span class="hero-badge">
+                <i class="bi bi-shield-check me-1"></i>
+                Update Security Role
+            </span>
 
-                    <div>
-                        <h2 class="fw-bold mb-1">Edit Role</h2>
-                        <p class="mb-0 opacity-75">
-                            Manage permissions for
-                            <strong>{{ $role->name }}</strong>
-                        </p>
-                    </div>
+                <h2 class="fw-bold mt-3 mb-2">
+                    Edit Role
+                </h2>
 
-                    <a href="{{ route('roles.index') }}"
-                       class="btn btn-light rounded-pill px-4">
-                        Back
-                    </a>
-
-                </div>
-
+                <p class="mb-0 opacity-75">
+                    Manage permissions for
+                    <strong>{{ $role->name }}</strong>
+                </p>
             </div>
+
+            <a href="{{ route('roles.index') }}"
+               class="btn btn-light rounded-pill px-4 fw-semibold shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i>
+                Back
+            </a>
+
         </div>
 
-        <form action="{{ route('roles.update', $role->id) }}" method="POST" class="update-confirm">
+        <form action="{{ route('roles.update', $role->id) }}"
+              method="POST"
+              class="update-confirm">
+
             @csrf
             @method('PUT')
 
-            <div class="card border-0 shadow-sm rounded-4 mb-4">
-                <div class="card-body p-4">
+            <div class="role-info-card mb-4">
 
-                    <div class="row g-4">
+                <div class="row g-4 align-items-center">
 
-                        <div class="col-md-8">
-                            <label class="form-label fw-bold">Role Name</label>
+                    <div class="col-md-8">
+                        <label class="form-label fw-bold">
+                            Role Name
+                        </label>
 
-                            <input type="text"
-                                   name="name"
-                                   value="{{ old('name', $role->name) }}"
-                                   class="form-control form-control-lg rounded-3 @error('name') is-invalid @enderror">
+                        <input type="text"
+                               name="name"
+                               value="{{ old('name', $role->name) }}"
+                               class="form-control form-control-lg role-input @error('name') is-invalid @enderror"
+                               placeholder="Enter Role Name"
+                               required>
 
-                            @error('name')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
+                        @error('name')
+                        <small class="text-danger d-block mt-1">{{ $message }}</small>
+                        @enderror
+                    </div>
 
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Quick Actions</label>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">
+                            Quick Actions
+                        </label>
 
-                            <div class="form-check form-switch fs-5">
+                        <div class="select-all-box">
+                            <div>
+                                <h6 class="mb-0 fw-bold">
+                                    Select All Permissions
+                                </h6>
+                                <small class="text-muted">
+                                    Enable or disable all permissions
+                                </small>
+                            </div>
+
+                            <div class="form-check form-switch m-0 fs-5">
                                 <input class="form-check-input"
                                        type="checkbox"
                                        id="selectAll">
-
-                                <label class="form-check-label fw-semibold">
-                                    Select All Permissions
-                                </label>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
+
             </div>
 
-            <div class="row">
+            <div class="row g-4">
 
                 @foreach($permissions as $groupName => $groupPermissions)
 
-                    <div class="col-xl-4 col-lg-6 mb-4">
+                    <div class="col-xl-4 col-lg-6">
 
-                        <div class="card border-0 shadow-sm rounded-4 permission-card h-100">
+                        <div class="permission-card h-100">
 
-                            <div class="card-header bg-dark text-white rounded-top-4">
+                            <div class="permission-card-header">
 
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1 fw-bold">
+                                        {{ ucwords(str_replace(['_', '.'], ' ', $groupName)) }}
+                                    </h6>
 
-                                    <div>
-                                        <h6 class="mb-0 fw-bold">
-                                            {{ ucwords(str_replace(['_', '.'], ' ', $groupName)) }}
-                                        </h6>
-
-                                        <small>
-                                            {{ count($groupPermissions) }} Permissions
-                                        </small>
-                                    </div>
-
-                                    <input type="checkbox"
-                                           class="group-checkbox form-check-input">
+                                    <small>
+                                        {{ count($groupPermissions) }} Permissions
+                                    </small>
                                 </div>
 
+                                <input type="checkbox"
+                                       class="group-checkbox form-check-input">
                             </div>
 
-                            <div class="card-body">
+                            <div class="permission-card-body">
 
                                 @foreach($groupPermissions as $permission)
 
-                                    <div class="permission-item mb-2 p-3 border rounded-3">
+                                    <div class="permission-item">
 
-                                        <div class="form-check">
+                                        <div class="form-check mb-0">
 
                                             <input class="form-check-input permission-checkbox"
                                                    type="checkbox"
@@ -134,48 +147,38 @@
 
             </div>
 
-            <div class="card border-0 shadow-lg rounded-4 sticky-bottom mt-4">
-                <div class="card-body">
+            <div class="role-submit-card mt-4">
 
-                    <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        Save Changes
+                    </h5>
 
-                        <div>
-                            <h5 class="mb-1 fw-bold">Save Changes</h5>
-                            <small class="text-muted">
-                                Permissions update instantly.
-                            </small>
-                        </div>
+                    <small class="text-muted">
+                        Permissions update instantly.
+                    </small>
+                </div>
 
-                        <div>
-                            <a href="{{ route('roles.index') }}"
-                               class="btn btn-light px-4 me-2">
-                                Cancel
-                            </a>
+                <div class="d-flex gap-2">
 
-                            <button type="submit"
-                                    class="btn btn-success px-5">
-                                Update Role
-                            </button>
-                        </div>
+                    <a href="{{ route('roles.index') }}"
+                       class="btn btn-light border rounded-pill px-4">
+                        Cancel
+                    </a>
 
-                    </div>
+                    <button type="submit"
+                            class="btn btn-success rounded-pill px-5 fw-semibold">
+                        <i class="bi bi-check-circle me-1"></i>
+                        Update Role
+                    </button>
 
                 </div>
+
             </div>
 
         </form>
 
     </div>
-
-    <style>
-        .permission-card { transition: .3s; }
-        .permission-card:hover { transform: translateY(-5px); }
-        .permission-item { transition: .3s; }
-        .permission-item:hover {
-            background: #f8f9fa;
-            border-color: #0d6efd !important;
-        }
-    </style>
 
     <script>
         document.getElementById('selectAll').addEventListener('change', function () {
@@ -185,7 +188,7 @@
 
         document.querySelectorAll('.group-checkbox').forEach(group => {
             group.addEventListener('change', function () {
-                let permissions = this.closest('.card')
+                let permissions = this.closest('.permission-card')
                     .querySelectorAll('.permission-checkbox');
 
                 permissions.forEach(cb => cb.checked = this.checked);

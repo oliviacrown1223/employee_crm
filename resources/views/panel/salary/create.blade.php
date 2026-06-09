@@ -4,22 +4,58 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 salary-create-page">
+
+        <div class="salary-create-hero mb-4">
+
+            <div>
+            <span class="salary-create-badge">
+                <i class="bi bi-cash-coin me-1"></i>
+                Payroll Module
+            </span>
+
+                <h2 class="fw-bold mt-3 mb-2">
+                    Generate Employee Salary
+                </h2>
+
+                <p class="mb-0 opacity-75">
+                    Create monthly payroll with bonus & deduction management
+                </p>
+            </div>
+
+            <a href="{{ route('salary.index') }}"
+               class="btn btn-light rounded-pill px-4 fw-semibold shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i>
+                Back
+            </a>
+
+        </div>
 
         <div class="row justify-content-center">
 
             <div class="col-xl-10">
 
-                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="salary-create-card">
 
-                    <div class="bg-dark text-white p-4">
-                        <h3 class="fw-bold mb-1">Generate Employee Salary</h3>
-                        <p class="mb-0 opacity-75">
-                            Create monthly payroll with bonus & deduction management
-                        </p>
+                    <div class="salary-create-card-header">
+
+                        <div>
+                            <h5 class="fw-bold mb-1">
+                                Salary Information
+                            </h5>
+
+                            <small class="text-muted">
+                                Select employee and generate monthly payroll
+                            </small>
+                        </div>
+
+                        <div class="salary-create-icon">
+                            <i class="bi bi-wallet2"></i>
+                        </div>
+
                     </div>
 
-                    <div class="card-body p-4 p-lg-5">
+                    <div class="salary-create-body">
 
                         <form id="salaryForm"
                               action="{{ route('salary.store') }}"
@@ -33,112 +69,148 @@
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Employee</label>
 
-                                    <select name="employee_id"
-                                            id="employee_id"
-                                            class="form-select py-3 @error('employee_id', 'salary') is-invalid @enderror">
+                                    <div class="salary-create-input-box">
+                                        <i class="bi bi-person"></i>
 
-                                        <option value="">Select Employee</option>
+                                        <select name="employee_id"
+                                                id="employee_id"
+                                                class="form-select salary-create-input @error('employee_id', 'salary') is-invalid @enderror">
 
-                                        @foreach($employees as $employee)
-                                            <option value="{{ $employee->id }}"
-                                                    data-salary="{{ $employee->salary }}"
-                                                {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
-                                                {{ $employee->name }}
-                                            </option>
-                                        @endforeach
+                                            <option value="">Select Employee</option>
 
-                                    </select>
+                                            @foreach($employees as $employee)
+                                                <option value="{{ $employee->id }}"
+                                                        data-salary="{{ $employee->salary }}"
+                                                    {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                                                    {{ $employee->name }}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
 
                                     @error('employee_id', 'salary')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Salary Month</label>
 
-                                    <input type="month"
-                                           name="salary_month"
-                                           value="{{ old('salary_month') }}"
-                                           class="form-control py-3 @error('salary_month', 'salary') is-invalid @enderror">
+                                    <div class="salary-create-input-box">
+                                        <i class="bi bi-calendar-month"></i>
+
+                                        <input type="month"
+                                               name="salary_month"
+                                               value="{{ old('salary_month') }}"
+                                               class="form-control salary-create-input @error('salary_month', 'salary') is-invalid @enderror">
+                                    </div>
 
                                     @error('salary_month', 'salary')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Basic Salary</label>
 
-                                    <input type="number"
-                                           name="basic_salary"
-                                           id="basic_salary"
-                                           value="{{ old('basic_salary') }}"
-                                           readonly
-                                           class="form-control py-3 @error('basic_salary', 'salary') is-invalid @enderror">
+                                    <div class="salary-create-input-box">
+                                        <i class="bi bi-currency-rupee"></i>
+
+                                        <input type="number"
+                                               name="basic_salary"
+                                               id="basic_salary"
+                                               value="{{ old('basic_salary') }}"
+                                               readonly
+                                               class="form-control salary-create-input @error('basic_salary', 'salary') is-invalid @enderror">
+                                    </div>
 
                                     @error('basic_salary', 'salary')
-                                    <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Bonus</label>
 
-                                    <input type="number"
-                                           name="bonus"
-                                           id="bonus"
-                                           value="{{ old('bonus', 0) }}"
-                                           class="form-control py-3">
+                                    <div class="salary-create-input-box">
+                                        <i class="bi bi-plus-circle"></i>
+
+                                        <input type="number"
+                                               name="bonus"
+                                               id="bonus"
+                                               value="{{ old('bonus', 0) }}"
+                                               class="form-control salary-create-input">
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Deduction</label>
 
-                                    <input type="number"
-                                           name="deduction"
-                                           id="deduction"
-                                           value="{{ old('deduction', 0) }}"
-                                           class="form-control py-3">
+                                    <div class="salary-create-input-box">
+                                        <i class="bi bi-dash-circle"></i>
+
+                                        <input type="number"
+                                               name="deduction"
+                                               id="deduction"
+                                               value="{{ old('deduction', 0) }}"
+                                               class="form-control salary-create-input">
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Payment Status</label>
 
-                                    <select name="payment_status"
-                                            class="form-select py-3">
-                                        <option value="Pending">Pending</option>
-                                        <option value="Paid">Paid</option>
-                                    </select>
+                                    <div class="salary-create-input-box">
+                                        <i class="bi bi-credit-card"></i>
+
+                                        <select name="payment_status"
+                                                class="form-select salary-create-input">
+                                            <option value="Pending">Pending</option>
+                                            <option value="Paid">Paid</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <div class="bg-light rounded-4 p-4 border">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h5 class="fw-bold mb-1">Net Salary</h5>
-                                                <small class="text-muted">Auto calculated salary preview</small>
-                                            </div>
+                                    <div class="net-salary-card">
 
-                                            <h2 class="fw-bold text-success mb-0">
-                                                ₹ <span id="netSalaryPreview">0</span>
-                                            </h2>
+                                        <div>
+                                        <span class="net-salary-label">
+                                            Net Salary
+                                        </span>
+
+                                            <h5 class="fw-bold mb-1">
+                                                Auto calculated salary preview
+                                            </h5>
+
+                                            <small>
+                                                Basic + Bonus - Deduction
+                                            </small>
                                         </div>
+
+                                        <div class="net-salary-amount">
+                                            ₹ <span id="netSalaryPreview">0</span>
+                                        </div>
+
                                     </div>
                                 </div>
 
                             </div>
 
-                            <div class="mt-5 text-end">
+                            <div class="salary-create-actions mt-5">
+
                                 <a href="{{ route('salary.index') }}"
-                                   class="btn btn-light border px-4 py-3 rounded-pill">
+                                   class="btn btn-light border rounded-pill px-5 py-3">
                                     Cancel
                                 </a>
 
                                 <button type="submit"
-                                        class="btn btn-dark px-5 py-3 rounded-pill">
+                                        class="btn btn-dark rounded-pill px-5 py-3 fw-semibold">
+                                    <i class="bi bi-check-circle me-1"></i>
                                     Generate Salary
                                 </button>
+
                             </div>
 
                         </form>

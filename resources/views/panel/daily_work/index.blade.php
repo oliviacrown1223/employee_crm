@@ -4,103 +4,110 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 daily-work-page">
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="daily-work-hero mb-4">
 
             <div>
+            <span class="daily-work-badge">
+                <i class="bi bi-journal-check me-1"></i>
+                Daily Work Module
+            </span>
 
-                <small class="text-muted">Manage employee tasks & submissions</small>
+                <h2 class="fw-bold mt-3 mb-2">
+                    Daily Work Management
+                </h2>
+
+                <p class="mb-0 opacity-75">
+                    Manage tasks, submissions & approvals
+                </p>
             </div>
+
+            @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->can('daily_work.create.team'))
+                <a href="{{ route('daily-work.create') }}"
+                   class="btn btn-light rounded-pill px-4 fw-semibold shadow-sm">
+                    <i class="bi bi-plus-circle me-1"></i>
+                    Add Work
+                </a>
+            @endif
 
         </div>
 
-        <div class="card border-0 shadow-sm rounded-4">
+        <div class="daily-work-card">
 
-            <div class="card-header bg-white border-0 p-4">
+            <div class="daily-work-card-header">
 
-                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        Work Records
+                    </h5>
 
-                    <div>
-                        <h3 class="fw-bold mb-1">Daily Work Management</h3>
-                        <p class="text-muted mb-0">Manage tasks, submissions & approvals</p>
-                    </div>
+                    <small class="text-muted">
+                        Search and filter daily work activity
+                    </small>
+                </div>
 
-                    <div class="d-flex gap-2 flex-wrap">
+                <div class="daily-work-filters">
 
-                        <select id="statusFilter"
-                                class="form-select rounded-3 border-0 shadow-sm statusFilter"
-                                >
-                            <option value="all">All Status</option>
-                            <option value="draft">Draft</option>
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
-                        </select>
+                    <select id="statusFilter"
+                            class="form-select daily-work-input statusFilter">
+                        <option value="all">All Status</option>
+                        <option value="draft">Draft</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+
+                    <div class="daily-search-box">
+                        <i class="bi bi-search"></i>
 
                         <input type="text"
                                id="searchInput"
-                               class="form-control rounded-3 border-0 shadow-sm search-input"
+                               class="form-control daily-work-input search-input"
                                placeholder="Search work...">
-
-                        @if(auth()->user()->hasAnyRole(['super-admin'])
-                         || auth()->user()->can('daily_work.create.team'))
-                        <a href="{{ route('daily-work.create') }}"
-                           class="btn btn-primary rounded-3 shadow-sm px-4 d-flex align-items-center gap-2">
-
-                            <i class="bi bi-plus-circle"></i>
-                            Add Work
-
-                        </a>
-                        @endif
-
                     </div>
 
                 </div>
 
             </div>
 
-            <div class="card-body p-0">
+            <div class="table-responsive">
 
-                <div class="table-responsive">
+                <table class="table daily-work-table align-middle mb-0">
 
-                    <table class="table table-hover align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th class="ps-4">Task</th>
+                        <th>Description</th>
+                        <th>Hours</th>
+                        <th>Work Date</th>
+                        <th>Submitted</th>
+                        <th>Status</th>
+                        <th class="text-center pe-4">Actions</th>
+                    </tr>
+                    </thead>
 
-                        <thead class="table-light">
-                        <tr>
-                            <th class="ps-4">Task</th>
-                            <th>Description</th>
-                            <th>Hours</th>
-                            <th>Work Date</th>
-                            <th>Submitted</th>
-                            <th>Status</th>
-                            <th class="text-center pe-4">Actions</th>
-                        </tr>
-                        </thead>
+                    <tbody id="workTable">
+                    @include('panel.daily_work.partials.table')
+                    </tbody>
 
-                        <tbody id="workTable">
-                        @include('panel.daily_work.partials.table')
-                        </tbody>
+                </table>
 
-                    </table>
+                @if(isset($works) && count($works) == 0)
 
-                    @if(isset($works) && count($works) == 0)
-                        <div class="text-center py-5">
+                    <div class="daily-empty-box">
+                        <i class="bi bi-inbox"></i>
 
-                            <i class="bi bi-inbox fs-1 text-muted"></i>
+                        <h5 class="fw-bold text-muted mt-2">
+                            No Daily Work Found
+                        </h5>
 
-                            <h5 class="fw-bold text-muted mt-2">
-                                No Daily Work Found
-                            </h5>
+                        <p class="text-muted mb-0">
+                            Start adding tasks
+                        </p>
+                    </div>
 
-                            <p class="text-muted mb-0">
-                                Start adding tasks
-                            </p>
-
-                        </div>
-                    @endif
-
-                </div>
+                @endif
 
             </div>
 

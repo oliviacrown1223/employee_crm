@@ -6,10 +6,16 @@
 
     <div class="container-fluid py-4">
 
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div class="leave-header mb-4">
 
             <div>
-                <h2 class="fw-bold mb-1 text-dark">
+
+        <span class="leave-module-badge">
+            <i class="bi bi-calendar2-check me-1"></i>
+            Leave Module
+        </span>
+
+                <h2 class="fw-bold mt-3 mb-1">
                     @role('employee')
                     My Leave
                     @else
@@ -20,31 +26,39 @@
                 <p class="text-muted mb-0">
                     Manage employee leave requests and approvals
                 </p>
+
             </div>
 
-            <div class="d-flex gap-2 align-items-center">
+            <div class="d-flex gap-2 flex-wrap align-items-center">
 
-            <span class="badge rounded-pill bg-primary-subtle text-primary px-4 py-2 fs-6">
-                Total Leaves : {{ $leaves->count() }}
-            </span>
-               @can('leave.apply.self')
-                @hasanyrole('employee')
-                <a href="{{ route('leave.create') }}"
-                   class="btn btn-primary rounded-pill px-4">
-                    <i class="bi bi-plus-circle me-1"></i>
-                    Apply Leave
-                </a>
-                @endhasanyrole
+                <div class="leave-counter-card">
+                    <small>Total Leaves</small>
+                    <h4 class="mb-0 fw-bold">
+                        {{ $leaves->count() }}
+                    </h4>
+                </div>
+
+                @can('leave.apply.self')
+                    @hasanyrole('employee')
+
+                    <a href="{{ route('leave.create') }}"
+                       class="btn btn-primary rounded-pill px-4 shadow-sm">
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Apply Leave
+                    </a>
+
+                    @endhasanyrole
                 @endcan
+
             </div>
 
         </div>
 
 
 
-        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="leave-main-card">
 
-            <div class="card-header bg-dark border-0 py-4">
+            <div class="leave-card-header">
 
                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
@@ -62,9 +76,7 @@
 
                         <input type="text"
                                id="leaveSearch"
-                               class="form-control rounded-pill ps-5"
-                               placeholder="Search employee..."
-                               style="width: 250px;">
+                               class="form-control leave-search-input ps-5">
 
                         <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
 

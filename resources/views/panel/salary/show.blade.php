@@ -4,108 +4,185 @@
 
 @section('content')
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 salary-show-page">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- HEADER -->
+        <div class="salary-show-header mb-4">
 
             <div>
-                <h2 class="fw-bold mb-0">
+
+            <span class="salary-show-badge">
+                <i class="bi bi-wallet2 me-1"></i>
+                Payroll Module
+            </span>
+
+                <h2 class="fw-bold mt-3 mb-1">
                     Salary Details
                 </h2>
 
-                <p class="text-muted">
+                <p class="mb-0 opacity-75">
                     Employee Payroll Information
                 </p>
+
             </div>
 
-            <div class="d-flex gap-2">
+            <div class="d-flex gap-2 flex-wrap">
+
                 <a href="{{ route('salary.payslip', $salary->id) }}"
-                   class="btn btn-success rounded-3">
+                   class="btn btn-success rounded-pill px-4 shadow-sm">
+
+                    <i class="bi bi-download me-1"></i>
                     Download Payslip
+
                 </a>
 
                 <a href="{{ route('salary.index') }}"
-                   class="btn btn-dark rounded-3">
+                   class="btn btn-light rounded-pill px-4 shadow-sm">
+
+                    <i class="bi bi-arrow-left me-1"></i>
                     Back
+
                 </a>
+
             </div>
 
         </div>
 
-        <div class="card border-0 shadow-sm rounded-4">
+        <div class="row g-4">
 
-            <div class="card-body">
+            <!-- Employee -->
+            <div class="col-md-6">
 
-                <div class="row g-4">
+                <div class="salary-info-card">
 
-                    <div class="col-md-6">
-                        <div class="border rounded-4 p-4 h-100">
-                            <h6 class="text-muted mb-3">Employee Name</h6>
-                            <h4 class="fw-bold">
-                                {{ $salary->employee->name }}
-                            </h4>
-                        </div>
+                    <small>Employee Name</small>
+
+                    <h3 class="fw-bold mt-2">
+                        {{ $salary->employee->name }}
+                    </h3>
+
+                    <div class="salary-card-icon bg-primary-subtle text-primary">
+                        <i class="bi bi-person"></i>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="border rounded-4 p-4 h-100">
-                            <h6 class="text-muted mb-3">Salary Month</h6>
-                            <h4 class="fw-bold">
-                                {{ $salary->salary_month }}
-                            </h4>
-                        </div>
+                </div>
+
+            </div>
+
+            <!-- Month -->
+            <div class="col-md-6">
+
+                <div class="salary-info-card">
+
+                    <small>Salary Month</small>
+
+                    <h3 class="fw-bold mt-2">
+                        {{ $salary->salary_month }}
+                    </h3>
+
+                    <div class="salary-card-icon bg-success-subtle text-success">
+                        <i class="bi bi-calendar-month"></i>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="border rounded-4 p-4">
-                            <h6 class="text-muted">Basic Salary</h6>
-                            <h4 class="fw-bold text-primary">
-                                ₹{{ number_format($salary->basic_salary, 2) }}
-                            </h4>
-                        </div>
+                </div>
+
+            </div>
+
+            <!-- Basic -->
+            <div class="col-md-3">
+
+                <div class="salary-stat-box salary-basic">
+
+                    <small>Basic Salary</small>
+
+                    <h4>
+                        ₹{{ number_format($salary->basic_salary,2) }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+            <!-- Bonus -->
+            <div class="col-md-3">
+
+                <div class="salary-stat-box salary-bonus">
+
+                    <small>Bonus</small>
+
+                    <h4>
+                        ₹{{ number_format($salary->bonus,2) }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+            <!-- Deduction -->
+            <div class="col-md-3">
+
+                <div class="salary-stat-box salary-deduction">
+
+                    <small>Deduction</small>
+
+                    <h4>
+                        ₹{{ number_format($salary->deduction,2) }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+            <!-- Net Salary -->
+            <div class="col-md-3">
+
+                <div class="salary-stat-box salary-net">
+
+                    <small>Net Salary</small>
+
+                    <h4>
+                        ₹{{ number_format($salary->net_salary,2) }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+            <!-- Payment Status -->
+            <div class="col-12">
+
+                <div class="salary-status-card">
+
+                    <div>
+
+                        <h5 class="fw-bold mb-2">
+                            Payment Status
+                        </h5>
+
+                        <small class="text-muted">
+                            Current payroll payment information
+                        </small>
+
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="border rounded-4 p-4">
-                            <h6 class="text-muted">Bonus</h6>
-                            <h4 class="fw-bold text-success">
-                                ₹{{ number_format($salary->bonus, 2) }}
-                            </h4>
-                        </div>
-                    </div>
+                    <div>
 
-                    <div class="col-md-3">
-                        <div class="border rounded-4 p-4">
-                            <h6 class="text-muted">Deduction</h6>
-                            <h4 class="fw-bold text-danger">
-                                ₹{{ number_format($salary->deduction, 2) }}
-                            </h4>
-                        </div>
-                    </div>
+                        @if($salary->payment_status == 'Paid')
 
-                    <div class="col-md-3">
-                        <div class="border rounded-4 p-4">
-                            <h6 class="text-muted">Net Salary</h6>
-                            <h4 class="fw-bold text-dark">
-                                ₹{{ number_format($salary->net_salary, 2) }}
-                            </h4>
-                        </div>
-                    </div>
+                            <span class="badge bg-success px-4 py-3 rounded-pill fs-6">
+                            <i class="bi bi-check-circle me-1"></i>
+                            Paid
+                        </span>
 
-                    <div class="col-md-12">
-                        <div class="border rounded-4 p-4">
-                            <h6 class="text-muted mb-3">Payment Status</h6>
+                        @else
 
-                            @if($salary->payment_status == 'Paid')
-                                <span class="badge bg-success px-4 py-2">
-                                Paid
-                            </span>
-                            @else
-                                <span class="badge bg-warning text-dark px-4 py-2">
-                                Pending
-                            </span>
-                            @endif
-                        </div>
+                            <span class="badge bg-warning text-dark px-4 py-3 rounded-pill fs-6">
+                            <i class="bi bi-clock-history me-1"></i>
+                            Pending
+                        </span>
+
+                        @endif
+
                     </div>
 
                 </div>
