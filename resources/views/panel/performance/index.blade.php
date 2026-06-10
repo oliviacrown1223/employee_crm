@@ -158,8 +158,7 @@
                                 <td class="px-4 py-3">
                                     <div class="d-flex align-items-center gap-3">
 
-                                        <div class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center shadow-sm"
-                                             style="width:45px;height:45px;">
+                                        <div class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center shadow-sm employee-logo">
                                             {{ strtoupper(substr($p->employee->name,0,1)) }}
                                         </div>
 

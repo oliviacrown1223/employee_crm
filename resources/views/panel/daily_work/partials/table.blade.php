@@ -51,8 +51,8 @@
                         @csrf
 
                         <button type="submit"
-                                class="btn btn-primary btn-sm d-flex align-items-center justify-content-center rounded-circle shadow-sm"
-                                style="width:38px;height:38px;"
+                                class="btn btn-primary btn-sm d-flex align-items-center justify-content-center rounded-circle shadow-sm submit-button"
+
                                 title="Submit">
 
                             <i class="bi bi-send"></i>
@@ -95,8 +95,7 @@
                         @csrf
 
                         <button type="submit"
-                                class="btn btn-success btn-sm d-flex align-items-center justify-content-center rounded-circle shadow-sm"
-                                style="width:38px;height:38px;"
+                                class="btn btn-success btn-sm d-flex align-items-center justify-content-center rounded-circle shadow-sm submit-button"
                                 title="Approve">
 
                             <i class="bi bi-check-lg"></i>
@@ -113,8 +112,7 @@
                         @csrf
 
                         <button type="submit"
-                                class="btn btn-danger btn-sm d-flex align-items-center justify-content-center rounded-circle shadow-sm"
-                                style="width:38px;height:38px;"
+                                class="btn btn-danger btn-sm d-flex align-items-center justify-content-center rounded-circle shadow-sm submit-button"
                                 title="Reject">
 
                             <i class="bi bi-x-lg"></i>
@@ -133,8 +131,7 @@
                     @method('DELETE')
 
                     <button type="submit"
-                            class="btn btn-dark btn-sm d-flex align-items-center justify-content-center rounded-circle shadow-sm"
-                            style="width:38px;height:38px;"
+                            class="btn btn-dark btn-sm d-flex align-items-center justify-content-center rounded-circle shadow-sm submit-button"
                             title="Delete">
                         <i class="bi bi-trash"></i>
                     </button>

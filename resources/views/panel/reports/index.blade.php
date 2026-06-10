@@ -594,7 +594,7 @@
 
                 location.reload();
             }
-       
+
             document.addEventListener('DOMContentLoaded', function () {
 
                 const employeeInput = document.getElementById('attendanceEmployeeSearch');

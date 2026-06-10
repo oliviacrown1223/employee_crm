@@ -64,11 +64,19 @@ class PerformanceController extends Controller
             'manager_rating' => 'required|numeric|min:0|max:5',
         ]);
 
-        $rating = round((
-                $validated['attendance_score'] +
-                $validated['task_completion_score'] +
+        // Convert percentage scores to 5-point scale
+        $attendanceRating = ($validated['attendance_score'] / 100) * 5;
+        $taskRating = ($validated['task_completion_score'] / 100) * 5;
+
+        // Final rating out of 5
+        $rating = round(
+            (
+                $attendanceRating +
+                $taskRating +
                 $validated['manager_rating']
-            ) / 3, 1);
+            ) / 3,
+            1
+        );
 
         $grade = Performance::getGrade($rating);
 
@@ -82,7 +90,8 @@ class PerformanceController extends Controller
             'month' => $validated['month'],
         ]);
 
-        return redirect()->route('performance.index')
+        return redirect()
+            ->route('performance.index')
             ->with('success', 'Performance rating generated successfully.');
     }
 
@@ -114,9 +123,12 @@ class PerformanceController extends Controller
             'manager_rating' => 'required|numeric|min:0|max:5',
         ]);
 
+        $attendanceRating = ($validated['attendance_score'] / 100) * 5;
+        $taskRating = ($validated['task_completion_score'] / 100) * 5;
+
         $rating = round((
-                $validated['attendance_score'] +
-                $validated['task_completion_score'] +
+                $attendanceRating +
+                $taskRating +
                 $validated['manager_rating']
             ) / 3, 1);
 
@@ -192,7 +204,7 @@ class PerformanceController extends Controller
 
         $performance = Performance::findOrFail($id);
 
-        // Employee પોતાનું જ record update કરી શકે
+
         $employee = Employee::where('user_id', auth()->id())
             ->orWhere('email', auth()->user()->email)
             ->first();

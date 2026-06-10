@@ -266,25 +266,17 @@
                         </tr>
 
                     @empty
-
                         <tr>
                             <td colspan="4" class="text-center text-muted py-5">
                                 <i class="bi bi-inbox display-5 d-block mb-2"></i>
                                 No employees found.
                             </td>
                         </tr>
-
                     @endforelse
-
                     </tbody>
-
                 </table>
-
             </div>
-
         </div>
         @endhasanyrole
-
     </div>
-
 @endsection

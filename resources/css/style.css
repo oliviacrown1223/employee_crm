@@ -3877,3 +3877,12 @@ body{
 }
 
 /*profile End*/
+.employee-logo{
+     width:45px!important;
+    height:45px!important;
+}
+
+.submit-button{
+     width:38px!important;
+    height:38px!important;
+}

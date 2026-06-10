@@ -135,8 +135,7 @@
 
                                     <div class="d-flex align-items-center gap-3">
 
-                                        <div class="rounded-circle bg-primary text-white fw-bold d-flex justify-content-center align-items-center"
-                                             style="width:45px;height:45px;">
+                                        <div class="rounded-circle bg-primary text-white fw-bold d-flex justify-content-center align-items-center employee-logo">
 
                                             {{ strtoupper(substr($leave->employee->name ?? '-',0,1)) }}
 
@@ -179,7 +178,7 @@
                                 </td>
 
                                 <td>
-                                    <div style="max-width:250px;">
+                                    <div>
                                         {{ $leave->reason }}
                                     </div>
                                 </td>
@@ -277,9 +276,6 @@
                                                 </button>
                                             </form>
                                             @endrole
-
-
-
                                     </div>
 
                                 </td>

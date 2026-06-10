@@ -106,8 +106,13 @@
                                                name="attendance_score"
                                                id="attendance_score"
                                                value="{{ old('attendance_score', $performance->attendance_score) }}"
+                                               min="1"
+                                               max="100"
                                                class="form-control performance-input">
                                     </div>
+                                    @error('attendance_score', 'performance')
+                                    <small class="text-danger d-block mt-1">{{ $message }}</small>
+                                    @enderror
                                 </div>
 
                                 <div class="col-md-4">
@@ -120,6 +125,8 @@
                                                name="task_completion_score"
                                                id="task_completion_score"
                                                value="{{ old('task_completion_score', $performance->task_completion_score) }}"
+                                               min="1"
+                                               max="100"
                                                class="form-control performance-input">
                                     </div>
                                 </div>
@@ -198,7 +205,6 @@
             if (rating >= 60) return 'B';
             return 'C';
         }
-
         function calculatePerformance() {
             let attendance = parseFloat(document.getElementById('attendance_score').value) || 0;
             let task = parseFloat(document.getElementById('task_completion_score').value) || 0;

@@ -7,31 +7,26 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithDrawings;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class EmployeesExport implements FromCollection, WithHeadings, WithMapping, WithDrawings,WithStyles
+class EmployeesExport implements FromCollection, WithHeadings, WithMapping, WithDrawings, WithStyles, WithColumnFormatting
 {
     protected $employees;
-    public function styles(Worksheet $sheet)
-    {
-        foreach (range(2, $this->employees->count() + 1) as $row) {
-            $sheet->getRowDimension($row)->setRowHeight(50);
-        }
 
-        $sheet->getColumnDimension('B')->setWidth(20);
-
-        return [];
-    }
     public function __construct()
     {
         $this->employees = Employee::all();
     }
+
     public function collection()
     {
         return $this->employees;
     }
+
     public function headings(): array
     {
         return [
@@ -52,16 +47,35 @@ class EmployeesExport implements FromCollection, WithHeadings, WithMapping, With
     {
         return [
             $employee->id,
-            '', // Image column
+            '',
             $employee->name,
             $employee->email,
-            $employee->mobile,
+            (string) $employee->mobile,
             $employee->department,
             $employee->designation,
             $employee->salary,
             $employee->joining_date,
             $employee->status,
         ];
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'E' => NumberFormat::FORMAT_TEXT,
+        ];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        foreach (range(2, $this->employees->count() + 1) as $row) {
+            $sheet->getRowDimension($row)->setRowHeight(50);
+        }
+
+        $sheet->getColumnDimension('B')->setWidth(20);
+        $sheet->getColumnDimension('E')->setWidth(18);
+
+        return [];
     }
 
     public function drawings()
@@ -85,11 +99,7 @@ class EmployeesExport implements FromCollection, WithHeadings, WithMapping, With
             $drawing->setName($employee->name);
             $drawing->setDescription('Employee Photo');
             $drawing->setPath($imagePath);
-
             $drawing->setHeight(60);
-
-            // B column = Photo
-            // Row starts from 2 because row 1 is heading
             $drawing->setCoordinates('B' . ($index + 2));
 
             $drawings[] = $drawing;
@@ -97,5 +107,4 @@ class EmployeesExport implements FromCollection, WithHeadings, WithMapping, With
 
         return $drawings;
     }
-
 }

@@ -23,8 +23,7 @@
                 <td>
                     <div class="d-flex align-items-center gap-3">
 
-                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
-                             style="width:45px; height:45px; font-weight:600;">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center employee-logo">
                             {{ strtoupper(substr($salary->employee->name,0,1)) }}
                         </div>
 
