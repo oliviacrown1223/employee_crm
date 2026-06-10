@@ -12,6 +12,7 @@ use App\Models\SuperAdmin\Salary;
 use App\Models\User;
 use App\Exports\ReportsExport;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
@@ -155,5 +156,27 @@ class ReportController extends Controller
         );
 
         return $pdf->download('reports.pdf');
+    }
+
+
+
+    public function attendanceSearch(Request $request)
+    {
+        $employee = $request->employee;
+        $date = $request->date;
+
+        $attendances = Attendance::with('employee')
+            ->when($employee, function ($query) use ($employee) {
+                $query->whereHas('employee', function ($q) use ($employee) {
+                    $q->where('name', 'like', '%' . $employee . '%');
+                });
+            })
+            ->when($date, function ($query) use ($date) {
+                $query->whereDate('attendance_date', $date);
+            })
+            ->latest()
+            ->get();
+
+        return view('panel.reports.partials.attendance-table', compact('attendances'))->render();
     }
 }

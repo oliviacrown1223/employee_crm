@@ -290,6 +290,9 @@ Route::middleware(['auth'])->group(function () {
         [ReportController::class,'exportPdf'])
         ->name('reports.export.pdff');
 
+    Route::get('/reports/attendance/search', [ReportController::class, 'attendanceSearch'])
+        ->name('reports.attendance.search');
+
     /*
     |--------------------------------------------------------------------------
     | USERS + ROLES
@@ -297,6 +300,9 @@ Route::middleware(['auth'])->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::middleware(['role:super-admin'])->group(function () {
+
+        Route::get('/users/search', [UserController::class, 'search'])
+            ->name('users.search');
 
         Route::resource('users', UserController::class);
 

@@ -142,4 +142,20 @@ class UserController extends Controller
 
         return back()->with('success', 'User deleted successfully.');
     }
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        $users = User::with('roles')
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                });
+            })
+            ->latest()
+            ->paginate(10);
+
+        return view('panel.users.partials.user-table', compact('users'))->render();
+    }
 }
