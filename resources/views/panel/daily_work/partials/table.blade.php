@@ -1,6 +1,9 @@
 @forelse($works as $work)
 
     <tr>
+        <td>
+            {{ $work->assignedUser->name ?? 'N/A' }}
+        </td>
 
         <td class="ps-3 fw-semibold">
             {{ $work->task_title }}

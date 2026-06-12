@@ -77,6 +77,7 @@
 
                     <thead>
                     <tr>
+                        <th>Employee Name</th>
                         <th class="ps-4">Task</th>
                         <th>Description</th>
                         <th>Hours</th>

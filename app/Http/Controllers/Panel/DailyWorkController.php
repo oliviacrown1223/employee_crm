@@ -13,6 +13,7 @@ class DailyWorkController extends Controller
     public function index()
     {
         $works = $this->roleWiseQuery()
+            ->with(['assignedUser'])
             ->latest()
             ->get();
 
@@ -205,7 +206,9 @@ class DailyWorkController extends Controller
             });
         }
 
-        $works = $query->latest()->get();
+        $works = $query->with(['assignedUser'])
+            ->latest()
+            ->get();
 
         return view('panel.daily_work.partials.table', compact('works'));
     }
